@@ -1,5 +1,5 @@
 function forceDownload(blobUrl: string, filename: string) {
-  let a: any = document.createElement("a");
+  const a: any = document.createElement("a");
   a.download = filename;
   a.href = blobUrl;
   document.body.appendChild(a);
@@ -16,7 +16,7 @@ export default function downloadPhoto(url: string, filename: string) {
   })
     .then((response) => response.blob())
     .then((blob) => {
-      let blobUrl = window.URL.createObjectURL(blob);
+      const blobUrl = window.URL.createObjectURL(blob);
       forceDownload(blobUrl, filename);
     })
     .catch((e) => console.error(e));
