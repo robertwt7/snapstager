@@ -3,25 +3,27 @@ import Link from "next/link";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import SquigglyLines from "../components/SquigglyLines";
+import { NextPage } from "next";
 
-export default function HomePage() {
+const HomePage: NextPage = () => {
   return (
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Header />
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 sm:mt-20 mt-20 background-gradient">
-        <h1 className="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-gray-300 sm:text-7xl">
+      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 sm:mt-20 mt-20">
+        <h1 className="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal sm:text-7xl">
           Virtual Staging{" "}
-          <span className="relative whitespace-nowrap text-blue-600">
+          <span className="relative whitespace-nowrap text-primary">
             <SquigglyLines />
             <span className="relative">using AI</span>
           </span>{" "}
           for everyone.
         </h1>
-        <h2 className="mx-auto mt-12 max-w-xl text-lg sm:text-gray-400  text-gray-500 leading-7">
-          Take a picture of your empty room and let AI fill it with furniture - use SnapStager today.
+        <h2 className="mx-auto mt-12 max-w-xl text-lg leading-7">
+          Take a picture of your empty room and let AI fill it with furniture -
+          use SnapStager today.
         </h2>
         <Link
-          className="bg-blue-600 rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-blue-500 transition"
+          className="bg-primary rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-primary/80 transition"
           href="/dream"
         >
           Instant Virtual Staging
@@ -56,4 +58,5 @@ export default function HomePage() {
       <Footer />
     </div>
   );
-}
+};
+export default HomePage;

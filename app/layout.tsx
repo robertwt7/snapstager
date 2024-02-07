@@ -2,10 +2,10 @@ import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 import "../styles/globals.css";
 
-let title = "Virtual Staging using AI";
-let description = "Highly Realistic Virtual Staging in a Snap.";
-let ogimage = "https://roomgpt-demo.vercel.app/og-image.png";
-let sitename = "snapstager.com";
+const title = "Virtual Staging using AI";
+const description = "Highly Realistic Virtual Staging in a Snap.";
+const ogimage = "https://roomgpt-demo.vercel.app/og-image.png";
+const sitename = "snapstager.com";
 
 export const metadata: Metadata = {
   title,
@@ -37,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-[#17181C] text-white">
+      <body>
         {children}
         <Analytics />
       </body>

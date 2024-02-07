@@ -16,17 +16,18 @@ import appendNewToName from "../../utils/appendNewToName";
 import downloadPhoto from "../../utils/downloadPhoto";
 import DropDown from "../../components/DropDown";
 import { roomType, rooms, themeType, themes } from "../../utils/dropdownTypes";
+import { NextPage } from "next";
 
 const options: UploadWidgetConfig = {
-  apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-      ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-      : "free",
+  apiKey: process.env.NEXT_PUBLIC_UPLOAD_API_KEY
+    ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
+    : "free",
   maxFileCount: 1,
   mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
   editor: { images: { crop: false } },
   styles: {
     colors: {
-      primary: "#2563EB", // Primary buttons & links
+      primary: "#172D3F", // Primary buttons & links
       error: "#d23f4d", // Error messages
       shade100: "#fff", // Standard text
       shade200: "#fffe", // Secondary button text
@@ -41,7 +42,7 @@ const options: UploadWidgetConfig = {
   },
 };
 
-export default function DreamPage() {
+const DreamPage: NextPage = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
   const [restoredImage, setRestoredImage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -64,8 +65,8 @@ export default function DreamPage() {
             filePath: image.filePath,
             options: {
               transformation: "preset",
-              transformationPreset: "thumbnail"
-            }
+              transformationPreset: "thumbnail",
+            },
           });
           setPhotoName(imageName);
           setOriginalPhoto(imageUrl);
@@ -88,7 +89,7 @@ export default function DreamPage() {
       body: JSON.stringify({ imageUrl: fileUrl, theme, room }),
     });
 
-    let newPhoto = await res.json();
+    const newPhoto = await res.json();
     if (res.status !== 200) {
       setError(newPhoto);
     } else {
@@ -103,8 +104,8 @@ export default function DreamPage() {
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
-        <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-100 sm:text-6xl mb-5">
-          Generate your <span className="text-blue-600">dream</span> room
+        <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal sm:text-6xl mb-5">
+          Generate your <span className="text-primary/80">dream</span> room
         </h1>
         <ResizablePanel>
           <AnimatePresence mode="wait">
@@ -114,7 +115,7 @@ export default function DreamPage() {
                   <div className="space-y-4 w-full max-w-sm">
                     <div className="flex mt-3 items-center space-x-3">
                       <Image
-                        src="/number-1-white.svg"
+                        src="/number-1.svg"
                         width={30}
                         height={30}
                         alt="1 icon"
@@ -134,7 +135,7 @@ export default function DreamPage() {
                   <div className="space-y-4 w-full max-w-sm">
                     <div className="flex mt-10 items-center space-x-3">
                       <Image
-                        src="/number-2-white.svg"
+                        src="/number-2.svg"
                         width={30}
                         height={30}
                         alt="1 icon"
@@ -152,7 +153,7 @@ export default function DreamPage() {
                   <div className="mt-4 w-full max-w-sm">
                     <div className="flex mt-6 w-96 items-center space-x-3">
                       <Image
-                        src="/number-3-white.svg"
+                        src="/number-3.svg"
                         width={30}
                         height={30}
                         alt="1 icon"
@@ -227,7 +228,7 @@ export default function DreamPage() {
               {loading && (
                 <button
                   disabled
-                  className="bg-blue-500 rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 w-40"
+                  className="bg-primary rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 w-40"
                 >
                   <span className="pt-4">
                     <LoadingDots color="white" style="large" />
@@ -251,7 +252,7 @@ export default function DreamPage() {
                       setRestoredLoaded(false);
                       setError(null);
                     }}
-                    className="bg-blue-500 rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-blue-500/80 transition"
+                    className="bg-primary rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-blue-500/80 transition"
                   >
                     Generate New Room
                   </button>
@@ -261,7 +262,7 @@ export default function DreamPage() {
                     onClick={() => {
                       downloadPhoto(
                         restoredImage!,
-                        appendNewToName(photoName!)
+                        appendNewToName(photoName!),
                       );
                     }}
                     className="bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition"
@@ -277,4 +278,6 @@ export default function DreamPage() {
       <Footer />
     </div>
   );
-}
+};
+
+export default DreamPage;
