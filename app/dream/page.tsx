@@ -6,22 +6,26 @@ import { useState } from "react";
 import { UrlBuilder } from "@bytescale/sdk";
 import { UploadWidgetConfig } from "@bytescale/upload-widget";
 import { UploadDropzone } from "@bytescale/upload-widget-react";
-import { CompareSlider } from "../../components/CompareSlider";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import LoadingDots from "../../components/LoadingDots";
-import ResizablePanel from "../../components/ResizablePanel";
-import Toggle from "../../components/Toggle";
-import appendNewToName from "../../utils/appendNewToName";
-import downloadPhoto from "../../utils/downloadPhoto";
-import DropDown from "../../components/DropDown";
-import { roomType, rooms, themeType, themes } from "../../utils/dropdownTypes";
+import { CompareSlider } from "../../src/components/CompareSlider";
+import Footer from "../../src/components/Footer";
+import Header from "../../src/components/Header";
+import LoadingDots from "../../src/components/LoadingDots";
+import ResizablePanel from "../../src/components/ResizablePanel";
+import Toggle from "../../src/components/Toggle";
+import appendNewToName from "../../src/utils/appendNewToName";
+import downloadPhoto from "../../src/utils/downloadPhoto";
+import DropDown from "../../src/components/DropDown";
+import {
+  roomType,
+  rooms,
+  themeType,
+  themes,
+} from "../../src/utils/dropdownTypes";
 import { NextPage } from "next";
+import { app } from "src/env";
 
 const options: UploadWidgetConfig = {
-  apiKey: process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    : "free",
+  apiKey: app.NEXT_PUBLIC_UPLOAD_API_KEY,
   maxFileCount: 1,
   mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
   editor: { images: { crop: false } },

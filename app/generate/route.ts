@@ -1,7 +1,8 @@
 import { Ratelimit } from "@upstash/ratelimit";
-import redis from "../../utils/redis";
+import redis from "../../src/services/redis";
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { api } from "src/env";
 
 // Create a new ratelimiter, that allows 5 requests per 24 hours
 const ratelimit = redis
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Token " + process.env.REPLICATE_API_KEY,
+        Authorization: "Token " + api.REPLICATE_API_KEY,
       },
       body: JSON.stringify({
         version:
@@ -76,7 +77,7 @@ export async function POST(request: Request) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Token " + process.env.REPLICATE_API_KEY,
+        Authorization: "Token " + api.REPLICATE_API_KEY,
       },
     });
     const jsonFinalResponse = await finalResponse.json();

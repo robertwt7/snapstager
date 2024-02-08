@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import SquigglyLines from "../components/SquigglyLines";
+import Footer from "../src/components/Footer";
+import Header from "../src/components/Header";
+import SquigglyLines from "../src/components/SquigglyLines";
 import { NextPage } from "next";
 
 const HomePage: NextPage = () => {
