@@ -1,5 +1,5 @@
 import { Ratelimit } from "@upstash/ratelimit";
-import redis from "../../src/services/redis";
+import { redis } from "../../src/services";
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { api } from "src/env";

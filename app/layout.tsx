@@ -1,6 +1,6 @@
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
-import "../styles/globals.css";
+import "src/styles/globals.css";
 
 const title = "Virtual Staging using AI";
 const description = "Highly Realistic Virtual Staging in a Snap.";

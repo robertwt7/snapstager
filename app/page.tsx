@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "../src/components/Footer";
-import Header from "../src/components/Header";
+import { Header } from "../src/components";
 import SquigglyLines from "../src/components/SquigglyLines";
 import { NextPage } from "next";
 

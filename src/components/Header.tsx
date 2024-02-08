@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FunctionComponent } from "react";
 
-export default function Header() {
+export const Header: FunctionComponent = () => {
   return (
     <header className="flex flex-row xs:flex-row justify-between items-center w-full mt-3 pb-7 sm:px-4 px-2 gap-2">
       <div className="relative md:h-[90px] md:w-[300px] w-[200px] h-[60px] ">
@@ -19,4 +20,4 @@ export default function Header() {
       </Link>
     </header>
   );
-}
+};
