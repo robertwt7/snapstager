@@ -54,7 +54,7 @@ const DreamPage: NextPage = () => {
   const [sideBySide, setSideBySide] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
-  const [theme, setTheme] = useState<themeType>("Modern");
+  const [theme, setTheme] = useState<themeType>("Cozy");
   const [room, setRoom] = useState<roomType>("Living Room");
 
   const UploadDropZone = () => (

@@ -3,7 +3,7 @@ export type themeType =
   | "Vintage"
   | "Minimalist"
   | "Professional"
-  | "Tropical";
+  | "Cozy";
 
 export type roomType =
   | "Living Room"
@@ -17,7 +17,7 @@ export const themes: themeType[] = [
   "Modern",
   "Minimalist",
   "Professional",
-  "Tropical",
+  "Cozy",
   "Vintage",
 ];
 export const rooms: roomType[] = [

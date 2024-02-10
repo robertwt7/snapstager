@@ -1,4 +1,4 @@
-## **Privacy Policy.**
+# **Privacy Policy.**
 
 **Effective January 1, 2021**
 

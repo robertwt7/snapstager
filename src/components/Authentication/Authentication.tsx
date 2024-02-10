@@ -7,9 +7,20 @@ import { supabase } from "src/services";
 export const Authentication: FunctionComponent = () => {
   return (
     <Auth
-      appearance={{ theme: ThemeSupa }}
+      appearance={{
+        theme: ThemeSupa,
+        variables: {
+          default: {
+            colors: {
+              brand: "#172D3F",
+              brandAccent: "#2d577a",
+            },
+          },
+        },
+      }}
       supabaseClient={supabase}
       providers={["github", "facebook", "google"]}
+      redirectTo="/dashboard"
     />
   );
 };

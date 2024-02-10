@@ -5,14 +5,12 @@ import remarkHtml from "remark-html";
 const PrivacyPolicy = async () => {
   const { mdFile } = await getContent();
   return (
-    <div className="flex flex-row justify-center py-8 px-4 md:px-0">
-      <main className="w-3/4 md:w-1/2 mx-8 flex-col items-center justify-center">
-        <article
-          className="prose lg:prose-xl text-xl"
-          dangerouslySetInnerHTML={{ __html: mdFile }}
-        />
-      </main>
-    </div>
+    <main className="flex mx-8 items-center justify-center">
+      <article
+        className="prose lg:prose-xl text-xl"
+        dangerouslySetInnerHTML={{ __html: mdFile }}
+      />
+    </main>
   );
 };
 
