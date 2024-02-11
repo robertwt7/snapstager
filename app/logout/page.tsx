@@ -24,7 +24,7 @@ const LogoutPage: NextPage = () => {
   return (
     <div className="flex min-h-screen justify-center items-center mx-auto">
       <main className="md:w-1/2 w-full mx-8 items-center text-center">
-        <h1 className="text-3xl">Please wait while we log you out</h1>
+        <h1 className="text-3xl">Please wait while we log you out...</h1>
       </main>
     </div>
   );

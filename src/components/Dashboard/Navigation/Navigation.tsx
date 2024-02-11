@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Cog6ToothIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { classNames } from "src/utils/classNames";
-import { navigation, teams } from "src/constants/navigation";
+import { navigation } from "src/constants/navigation";
 import Image from "next/image";
 
 interface NavigationProps {
@@ -105,7 +105,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                           ))}
                         </ul>
                       </li>
-                      <li>
+                      {/* <li>
                         <div className="text-xs font-semibold leading-6 text-indigo-200">
                           Your teams
                         </div>
@@ -129,7 +129,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                             </li>
                           ))}
                         </ul>
-                      </li>
+                      </li> */}
                       <li className="mt-auto">
                         <a
                           href="#"
@@ -156,7 +156,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-primary px-6 pb-4">
           <div className="flex h-[90px] shrink-0 items-center">
-            <div className="relative md:h-[81px] md:w-[270px]">
+            <div className="relative md:h-[75px] md:w-[270px]">
               <Image alt="logo text" src="/logo-white.png" fill />
             </div>
           </div>
@@ -190,7 +190,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                   ))}
                 </ul>
               </li>
-              <li>
+              {/* <li>
                 <div className="text-xs font-semibold leading-6 text-indigo-200">
                   Your teams
                 </div>
@@ -214,7 +214,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                     </li>
                   ))}
                 </ul>
-              </li>
+              </li> */}
               <li className="mt-auto">
                 <a
                   href="#"

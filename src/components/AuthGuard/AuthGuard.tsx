@@ -16,11 +16,11 @@ export const AuthGuard: FunctionComponent<AuthGuardProps> = ({ children }) => {
           router.push("/dashboard");
         } else {
           //TODO: Handle feedback with snackbar
-          router.push("/");
+          router.push("/login");
         }
       } catch (error) {
         //TODO: Handle feedback with snackbar
-        router.push("/");
+        router.push("/login");
       }
     };
 

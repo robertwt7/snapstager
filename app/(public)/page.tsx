@@ -15,12 +15,12 @@ const HomePage: NextPage = () => {
         for everyone.
       </h1>
       <h2 className="mx-auto mt-12 max-w-xl text-lg leading-7">
-        Take a picture of your empty room and let AI fill it with furniture -
-        use SnapStager today.
+        Take a picture of your empty room and let AI does magic - use SnapStager
+        today.
       </h2>
       <Link
         className="bg-primary rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-primary/80 transition"
-        href="/dream"
+        href="/dashboard"
       >
         Instant Virtual Staging
       </Link>
