@@ -1,7 +1,7 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { FunctionComponent, useCallback, useState } from "react";
+import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { UrlBuilder } from "@bytescale/sdk";
 import { UploadWidgetConfig } from "@bytescale/upload-widget";
 import { UploadDropzone } from "@bytescale/upload-widget-react";
@@ -14,8 +14,10 @@ import downloadPhoto from "../../utils/downloadPhoto";
 import DropDown from "../../components/DropDown";
 import { roomType, rooms, themeType, themes } from "../../utils/dropdownTypes";
 import { app } from "src/env";
+import { User } from "@supabase/supabase-js";
+import { supabase } from "src/services";
 
-const options: UploadWidgetConfig = {
+const options: (userId?: string) => UploadWidgetConfig = (userId?: string) => ({
   apiKey: app.NEXT_PUBLIC_UPLOAD_API_KEY,
   maxFileCount: 1,
   mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
@@ -26,7 +28,10 @@ const options: UploadWidgetConfig = {
       error: "#d23f4d", // Error messages
     },
   },
-};
+  path: {
+    folderPath: `/${userId}` ?? "/uploads",
+  },
+});
 
 export const StageForm: FunctionComponent = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
@@ -38,10 +43,24 @@ export const StageForm: FunctionComponent = () => {
   const [photoName, setPhotoName] = useState<string | null>(null);
   const [theme, setTheme] = useState<themeType>("Cozy");
   const [room, setRoom] = useState<roomType>("Living Room");
+  const [user, setUser] = useState<User | null>(null);
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const user = await supabase.auth.getUser();
+        if (user?.data !== null) {
+          setUser(user.data.user);
+        }
+      } catch (error) {
+        // TODO: handle error with snackbar
+      }
+    };
+    getUser();
+  }, []);
 
   const UploadDropZone = () => (
     <UploadDropzone
-      options={options}
+      options={options(user?.id)}
       onUpdate={({ uploadedFiles }) => {
         if (uploadedFiles.length !== 0) {
           const image = uploadedFiles[0];
