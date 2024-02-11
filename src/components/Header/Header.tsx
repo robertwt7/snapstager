@@ -30,10 +30,10 @@ export const Header: FunctionComponent = () => {
       </div>
       <Link
         className="flex max-w-fit items-center justify-center space-x-2 rounded-xl border border-primary text-white px-5 py-2 text-sm shadow-md hover:bg-primary/90 bg-primary font-medium transition"
-        href={user !== null ? "/logout" : "/login"}
+        href={user !== null ? "/dashboard" : "/login"}
         rel="noopener noreferrer"
       >
-        {user !== null ? "Logout" : "Login"}
+        {user !== null ? "Dashboard" : "Login"}
       </Link>
     </header>
   );
