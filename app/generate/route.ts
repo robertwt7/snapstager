@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     }
   }
 
-  const { imageUrl, theme, room } = await request.json();
+  const { imageUrl, imageMaskUrl, theme, room } = await request.json();
 
   // POST request to Replicate to start the image restoration generation process
   const startResponse = await fetch(
@@ -48,17 +48,11 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         version:
-          "854e8727697a057c525cdb45ab037f64ecca770a1769cc52287c2e56472a247b",
+          "9a1427922c7a07ca79cbbb59906551b2d762d01c323ce75692394b151ae71793",
         input: {
           image: imageUrl,
-          prompt:
-            room === "Gaming Room"
-              ? "a room for gaming with gaming computers, gaming consoles, and gaming chairs"
-              : `a ${theme.toLowerCase()} ${room.toLowerCase()}`,
-          a_prompt:
-            "best quality, extremely detailed, photo from Pinterest, interior, cinematic photo, ultra-detailed, ultra-realistic, award-winning",
-          n_prompt:
-            "longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality",
+          imageMask: imageMaskUrl,
+          prompt: `a ${theme.toLowerCase()} ${room.toLowerCase()}`,
         },
       }),
     },

@@ -1,9 +1,9 @@
 import { Dispatch, FunctionComponent, SetStateAction } from "react";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Cog6ToothIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { classNames } from "src/utils/classNames";
-import { navigation } from "src/constants/navigation";
+import { useNavigationItems } from "src/constants/navigation";
 import Image from "next/image";
 
 interface NavigationProps {
@@ -14,6 +14,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
   sidebarOpen,
   setSidebarOpen,
 }) => {
+  const navigation = useNavigationItems();
   return (
     <>
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -130,7 +131,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                           ))}
                         </ul>
                       </li> */}
-                      <li className="mt-auto">
+                      {/* <li className="mt-auto">
                         <a
                           href="#"
                           className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
@@ -141,7 +142,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                           />
                           Settings
                         </a>
-                      </li>
+                      </li> */}
                     </ul>
                   </nav>
                 </div>
@@ -215,7 +216,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                   ))}
                 </ul>
               </li> */}
-              <li className="mt-auto">
+              {/* <li className="mt-auto">
                 <a
                   href="#"
                   className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
@@ -226,7 +227,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                   />
                   Settings
                 </a>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </div>

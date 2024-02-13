@@ -1,31 +1,35 @@
 "use client";
 import { supabase } from "src/services";
 import { FunctionComponent, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Route, nonAuthRoutes } from "src/constants/navigation";
 
 interface AuthGuardProps {
   children: React.ReactNode;
 }
 export const AuthGuard: FunctionComponent<AuthGuardProps> = ({ children }) => {
   const router = useRouter();
+  const pathName = usePathname();
   useEffect(() => {
     const getSession = async () => {
       try {
         const session = await supabase.auth.getSession();
         if (session?.data?.session) {
-          router.push("/dashboard");
+          if (nonAuthRoutes.includes(pathName as Route)) {
+            router.push(Route.DASHBOARD);
+          }
         } else {
           //TODO: Handle feedback with snackbar
-          router.push("/login");
+          router.push(Route.LOGIN);
         }
       } catch (error) {
         //TODO: Handle feedback with snackbar
-        router.push("/login");
+        router.push(Route.LOGIN);
       }
     };
 
     getSession();
-  }, [router]);
+  }, [router, pathName]);
 
   return <>{children}</>;
 };

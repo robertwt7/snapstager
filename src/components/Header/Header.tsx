@@ -4,6 +4,7 @@ import { supabase } from "src/services";
 import Link from "next/link";
 import { FunctionComponent, useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
+import { Route } from "src/constants/navigation";
 
 export const Header: FunctionComponent = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -30,7 +31,7 @@ export const Header: FunctionComponent = () => {
       </div>
       <Link
         className="flex max-w-fit items-center justify-center space-x-2 rounded-xl border border-primary text-white px-5 py-2 text-sm shadow-md hover:bg-primary/90 bg-primary font-medium transition"
-        href={user !== null ? "/dashboard" : "/login"}
+        href={user !== null ? Route.DASHBOARD : Route.LOGIN}
         rel="noopener noreferrer"
       >
         {user !== null ? "Dashboard" : "Login"}
