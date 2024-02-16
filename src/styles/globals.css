@@ -13,6 +13,37 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .image-rendering-pixelated {
+    image-rendering: pixelated;
+  }
+}
+
+@layer components {
+  .canvas {
+    @apply absolute top-0 left-0 w-full h-full;
+  }
+  .slider {
+    @apply range block w-full h-6 bg-white border px-1.5 rounded-full border-stone-300 appearance-none cursor-pointer dark:bg-stone-700;
+  }
+
+  .range {
+    background: transparent !important;
+    box-shadow: inset 0px 0px 0px 20px white;
+    &::-webkit-slider-runnable-track {
+      @apply bg-white;
+    }
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      @apply w-3 h-3 rounded-full bg-orange-600 shadow-none;
+    }
+    &.disabled {
+      &::-webkit-slider-thumb {
+        @apply bg-stone-300;
+      }
+    }
+  }
+}
 @media (min-width: 400px) {
   .background-gradient::before {
     background: radial-gradient(

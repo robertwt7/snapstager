@@ -73,7 +73,12 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-primary px-6 pb-4">
                   <div className="flex h-[90px] shrink-0 items-center">
                     <div className="relative md:h-[90px] md:w-[300px] w-[200px] h-[60px] ">
-                      <Image alt="logo text" src="/logo-white.png" fill />
+                      <Image
+                        alt="logo text"
+                        src="/logo-white.png"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
+                      />
                     </div>
                   </div>
                   <nav className="flex flex-1 flex-col">
@@ -158,7 +163,12 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-primary px-6 pb-4">
           <div className="flex h-[90px] shrink-0 items-center">
             <div className="relative md:h-[75px] md:w-[270px]">
-              <Image alt="logo text" src="/logo-white.png" fill />
+              <Image
+                alt="logo text"
+                src="/logo-white.png"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
+              />
             </div>
           </div>
           <nav className="flex flex-1 flex-col">

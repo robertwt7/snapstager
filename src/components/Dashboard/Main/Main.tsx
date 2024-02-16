@@ -1,7 +1,11 @@
 "use client";
 import { FunctionComponent } from "react";
-import { StageForm } from "src/components/StageForm/StageForm";
+import { ImageBrushMask } from "src/components/ImageCanvasEditor/ImageBrushMask";
 
 export const Main: FunctionComponent = () => {
-  return <StageForm />;
+  return (
+    <div className="h-screen flex flex-col overflow-hidden">
+      <ImageBrushMask />
+    </div>
+  );
 };

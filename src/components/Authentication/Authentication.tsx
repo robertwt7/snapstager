@@ -26,7 +26,12 @@ export const Authentication: FunctionComponent = () => {
     <AuthGuard>
       <div className="flex flex-col items-center">
         <div className="relative md:h-[90px] md:w-[300px] w-[200px] h-[60px] ">
-          <Image alt="logo text" src="/logo.png" fill />
+          <Image
+            alt="logo text"
+            src="/logo.png"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
+          />
         </div>
         <div className="w-full">
           <Auth
