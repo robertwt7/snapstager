@@ -1,7 +1,13 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { FunctionComponent, useCallback, useEffect, useState } from "react";
+import {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { UrlBuilder } from "@bytescale/sdk";
 import { UploadWidgetConfig } from "@bytescale/upload-widget";
 import { UploadDropzone } from "@bytescale/upload-widget-react";
@@ -16,6 +22,8 @@ import { roomType, rooms, themeType, themes } from "../../utils/dropdownTypes";
 import { app } from "src/env";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "src/services";
+import { ImageCanvasEditor } from "../ImageCanvasEditor";
+import { exportMask } from "./helpers";
 
 const options: (userId?: string) => UploadWidgetConfig = (userId?: string) => ({
   apiKey: app.NEXT_PUBLIC_UPLOAD_API_KEY,
@@ -44,6 +52,10 @@ export const StageForm: FunctionComponent = () => {
   const [theme, setTheme] = useState<themeType>("Cozy");
   const [room, setRoom] = useState<roomType>("Living Room");
   const [user, setUser] = useState<User | null>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const canvasDrawingRef = useRef<HTMLCanvasElement>(null);
+  const [clear, setClear] = useState(0);
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -94,6 +106,12 @@ export const StageForm: FunctionComponent = () => {
         },
         body: JSON.stringify({ imageUrl: fileUrl, theme, room }),
       });
+
+      const image = exportMask(
+        canvasDrawingRef.current,
+        imageRef.current?.width,
+        imageRef.current?.height,
+      );
 
       const newPhoto = await res.json();
       if (res.status !== 200) {
@@ -194,13 +212,29 @@ export const StageForm: FunctionComponent = () => {
             )}
             {!originalPhoto && <UploadDropZone />}
             {originalPhoto && !restoredImage && (
-              <Image
-                alt="original photo"
-                src={originalPhoto}
-                className="rounded-2xl h-96"
-                width={475}
-                height={475}
-              />
+              <div className="relative">
+                <Image
+                  alt="original photo"
+                  ref={imageRef}
+                  src={originalPhoto}
+                  className="rounded-2xl w-100 h-auto"
+                  width={600}
+                  height={475}
+                />
+                <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+                  <div className="relative w-full h-full">
+                    <button
+                      onClick={() => setClear(clear + 1)}
+                      className="z-10 absolute top-4 left-4 rounded-xl border-primary border text-sm text-white px-5 py-2 hover:bg-primary/90 bg-primary font-medium transition shadow-md"
+                    >
+                      Clear
+                    </button>
+                    <div className="opacity-30 w-full h-full">
+                      <ImageCanvasEditor ref={canvasDrawingRef} clear={clear} />
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
             {restoredImage && originalPhoto && !sideBySide && (
               <div className="flex sm:space-x-4 sm:flex-row flex-col">
