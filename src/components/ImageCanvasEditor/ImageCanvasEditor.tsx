@@ -13,7 +13,7 @@ import { getCatenaryCurve, drawResult } from "catenary-curve";
 const DRAW_MAX_DPI = 2;
 
 const styleVariables = {
-  colorPrimary: "rgb(234,88,12)",
+  colorPrimary: "#ffffff",
   colorBlack: "#0a0302",
   colorCatenary: "#0a0302",
 };
@@ -31,7 +31,7 @@ export const ImageCanvasEditor = forwardRef<
   ImageCanvasEditorProps
 >(function ImageCanvasEditor(
   {
-    brushRadius = 12.5,
+    brushRadius = 27.5,
     lazyRadius = 10,
     friction = 10,
     clear = 0,
@@ -55,8 +55,6 @@ export const ImageCanvasEditor = forwardRef<
   const canvasInterfaceRef = useRef<HTMLCanvasElement>(null);
   const canvasDrawingRef = ref;
   const canvasTempRef = useRef<HTMLCanvasElement>(null);
-  const canvasGridRef = useRef<HTMLCanvasElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>();
 
   const lazy = useRef(
@@ -92,6 +90,13 @@ export const ImageCanvasEditor = forwardRef<
         dimensions.height,
         DRAW_MAX_DPI,
       );
+      // Set temp canvas to transparent, so naturally the canvasDrawing will be transparent later as well
+      const canvas = canvasTempRef.current;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.fillStyle = "transparent";
+        ctx?.fillRect(0, 0, dimensions.width, dimensions.height);
+      }
       setCanvasSize(
         canvasInterfaceRef.current,
         dimensions.width,
@@ -102,7 +107,6 @@ export const ImageCanvasEditor = forwardRef<
   }, [containerRef.current, dimensions.width, dimensions.height]);
 
   useEffect(() => {
-    drawGrid();
     rafRef.current = requestAnimationFrame(loop);
 
     const handleResize = () => {
@@ -188,40 +192,6 @@ export const ImageCanvasEditor = forwardRef<
     onPointerUp();
     const brush = lazy.getBrushCoordinates();
     lazy.update({ x: brush.x, y: brush.y }, { both: true });
-  };
-
-  const drawGrid = () => {
-    if (canvasGridRef.current !== null) {
-      const canvas = canvasGridRef.current;
-      const ctx = canvas.getContext("2d");
-      const size = 24 * dimensions.dpi;
-      canvas.width = size;
-      canvas.height = size;
-      if (ctx === null) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      ctx.strokeStyle = "rgb(214, 211, 209)";
-      ctx.lineWidth = dimensions.dpi;
-
-      // Draw vertical line
-      ctx.beginPath();
-      ctx.moveTo(0, size - 0.5);
-      ctx.lineTo(size, size - 0.5);
-      ctx.stroke();
-
-      // Draw horizontal line
-      ctx.beginPath();
-      ctx.moveTo(size - 0.5, 0);
-      ctx.lineTo(size - 0.5, size);
-      ctx.stroke();
-
-      const gridElement = gridRef.current;
-      if (gridElement) {
-        const png = canvas.toDataURL();
-        gridElement.style.backgroundImage = `url(${png})`;
-        gridElement.style.backgroundSize = `24px 24px`;
-      }
-    }
   };
 
   const drawToCanvas = () => {
@@ -407,8 +377,6 @@ export const ImageCanvasEditor = forwardRef<
       ></canvas>
       <canvas className="canvas z-30" ref={canvasTempRef}></canvas>
       <canvas className="canvas z-20" ref={ref}></canvas>
-      <div className="canvas z-10" ref={gridRef}></div>
-      <canvas className="hidden" ref={canvasGridRef}></canvas>
     </div>
   );
 });

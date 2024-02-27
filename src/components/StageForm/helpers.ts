@@ -10,9 +10,12 @@ export const exportMask = (
 
   // Get the context of the new canvas
   const ctx = exportCanvas.getContext("2d");
-
-  // Draw the mask canvas onto the new canvas with resizing
-  ctx?.drawImage(canvasRef, 0, 0, originalWidth, originalHeight);
+  if (ctx !== null) {
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, originalWidth, originalHeight);
+    // Draw the mask canvas onto the new canvas with resizing
+    ctx.drawImage(canvasRef, 0, 0, originalWidth, originalHeight);
+  }
 
   // Export the canvas to an image format, e.g., PNG
   const maskDataURL = exportCanvas.toDataURL("image/png");
@@ -32,7 +35,9 @@ getImageDimensions(imageUrl)
     console.error(error);
   });
  */
-export const getImageDimensions = (url: string) => {
+export const getImageDimensions = (
+  url: string,
+): Promise<{ width: number; height: number }> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
 

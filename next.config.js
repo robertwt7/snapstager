@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["upcdn.io", "replicate.delivery", "images.unsplash.com"],
+    domains: ["upcdn.io", "replicate.delivery", "fastly.picsum.photos"],
   },
 };

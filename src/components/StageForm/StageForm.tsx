@@ -23,7 +23,7 @@ import { app } from "src/env";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "src/services";
 import { ImageCanvasEditor } from "../ImageCanvasEditor";
-import { exportMask } from "./helpers";
+import { exportMask, getImageDimensions } from "./helpers";
 
 const options: (userId?: string) => UploadWidgetConfig = (userId?: string) => ({
   apiKey: app.NEXT_PUBLIC_UPLOAD_API_KEY,
@@ -95,35 +95,53 @@ export const StageForm: FunctionComponent = () => {
     />
   );
 
+  const generateMaskedPhoto = async (url: string) => {
+    try {
+      const imageDimension = await getImageDimensions(url);
+      const image = exportMask(
+        canvasDrawingRef.current,
+        imageDimension.width,
+        imageDimension.height,
+      );
+      return image;
+    } catch (e) {
+      // TODO: Snackbar for error
+    }
+  };
+
   const generatePhoto = useCallback(
     async (fileUrl: string) => {
       await new Promise((resolve) => setTimeout(resolve, 200));
       setLoading(true);
-      const res = await fetch("/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ imageUrl: fileUrl, theme, room }),
-      });
+      try {
+        const maskedImage = await generateMaskedPhoto(originalPhoto ?? "");
+        const res = await fetch("/generate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            imageUrl: fileUrl,
+            imageMaskUrl: maskedImage,
+            theme,
+            room,
+          }),
+        });
 
-      const image = exportMask(
-        canvasDrawingRef.current,
-        imageRef.current?.width,
-        imageRef.current?.height,
-      );
-
-      const newPhoto = await res.json();
-      if (res.status !== 200) {
-        setError(newPhoto);
-      } else {
-        setRestoredImage(newPhoto[1]);
+        const newPhoto = await res.json();
+        if (res.status !== 200) {
+          setError(newPhoto);
+        } else {
+          setRestoredImage(newPhoto[1]);
+        }
+      } catch (e) {
+        // TODO: Snackbar
       }
       setTimeout(() => {
         setLoading(false);
       }, 1300);
     },
-    [room, theme],
+    [room, theme, originalPhoto],
   );
 
   return (
@@ -224,12 +242,14 @@ export const StageForm: FunctionComponent = () => {
                 <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
                   <div className="relative w-full h-full">
                     <button
-                      onClick={() => setClear(clear + 1)}
+                      onClick={() => {
+                        setClear(clear + 1);
+                      }}
                       className="z-10 absolute top-4 left-4 rounded-xl border-primary border text-sm text-white px-5 py-2 hover:bg-primary/90 bg-primary font-medium transition shadow-md"
                     >
                       Clear
                     </button>
-                    <div className="opacity-30 w-full h-full">
+                    <div className="opacity-40 w-full h-full">
                       <ImageCanvasEditor ref={canvasDrawingRef} clear={clear} />
                     </div>
                   </div>
