@@ -2,6 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import {
+  ChangeEvent,
   FunctionComponent,
   useCallback,
   useEffect,
@@ -24,6 +25,7 @@ import { User } from "@supabase/supabase-js";
 import { supabase } from "src/services";
 import { ImageCanvasEditor } from "../ImageCanvasEditor";
 import { exportMask, getImageDimensions } from "./helpers";
+import { uploadImage } from "src/services/cloudflare";
 
 const options: (userId?: string) => UploadWidgetConfig = (userId?: string) => ({
   apiKey: app.NEXT_PUBLIC_UPLOAD_API_KEY,
@@ -95,6 +97,63 @@ export const StageForm: FunctionComponent = () => {
     />
   );
 
+  const UploadDropZoneCloudFlare = () => {
+    const handleInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files === null) return;
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+
+      try {
+        const result = await uploadImage(formData);
+        if (result?.success) {
+          // Set original photo here
+          setOriginalPhoto(result?.result.variants[0] ?? null);
+          console.log("Image uploaded: ", result);
+        }
+      } catch (e) {
+        console.log("Upload image error: ", e);
+      }
+    };
+    return (
+      <div className="flex items-center justify-center w-full max-w-sm">
+        <label
+          htmlFor="dropzone-file"
+          className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        >
+          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg
+              className="w-10 h-10 mb-3 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              ></path>
+            </svg>
+            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <span className="font-semibold">Click to upload</span> or drag and
+              drop
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              PNG or JPG
+            </p>
+          </div>
+          <input
+            id="dropzone-file"
+            type="file"
+            className="hidden"
+            onChange={handleInputChange}
+          />
+        </label>
+      </div>
+    );
+  };
+
   const generateMaskedPhoto = async (url: string) => {
     try {
       const imageDimension = await getImageDimensions(url);
@@ -147,7 +206,7 @@ export const StageForm: FunctionComponent = () => {
   return (
     <div className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
       <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal sm:text-6xl mb-5">
-        Fill your room
+        Stage your room
       </h1>
       <ResizablePanel>
         <AnimatePresence mode="wait">
@@ -207,7 +266,7 @@ export const StageForm: FunctionComponent = () => {
             )}
             {restoredImage && (
               <div>
-                Here's your remodeled <b>{room.toLowerCase()}</b> in the{" "}
+                Here&apos;s your remodeled <b>{room.toLowerCase()}</b> in the{" "}
                 <b>{theme.toLowerCase()}</b> theme!{" "}
               </div>
             )}
@@ -228,7 +287,7 @@ export const StageForm: FunctionComponent = () => {
                 restored={restoredImage!}
               />
             )}
-            {!originalPhoto && <UploadDropZone />}
+            {!originalPhoto && <UploadDropZoneCloudFlare />}
             {originalPhoto && !restoredImage && (
               <div className="relative">
                 <Image

@@ -246,6 +246,27 @@ model Profile {
   lastName     String
   credit       Int            @default(0)
   Transactions Transactions[]
+  Images       Images[]
+
+  @@schema("public")
+}
+
+enum ImageType {
+  ORIGINAL
+  MASK
+  FINAL
+
+  @@schema("public")
+}
+
+model Images {
+  id        Int       @id @default(autoincrement())
+  profileId String    @db.Uuid
+  profile   Profile   @relation(fields: [profileId], references: [uid])
+  url  String    // This is the unique id of the image in the hosted service (cloudflare)
+  type      ImageType
+  updatedAt DateTime  @updatedAt
+  createdAt DateTime  @default(now())
 
   @@schema("public")
 }
