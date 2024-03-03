@@ -5,7 +5,6 @@ import {
   DragEvent,
   FunctionComponent,
   SetStateAction,
-  useCallback,
   useState,
 } from "react";
 
@@ -21,17 +20,22 @@ export const UploadDropZone: FunctionComponent<UploadDropzoneProps> = ({
 }) => {
   const [dragOver, setDragOver] = useState(false);
 
-  const handleDragOver = useCallback((e: DragEvent<HTMLLabelElement>) => {
+  const handleDragOver = (e: DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     setDragOver(true);
-  }, []);
+  };
 
-  const handleDragLeave = useCallback((e: DragEvent<HTMLLabelElement>) => {
+  const handleDragLeave = (e: DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
+    e.stopPropagation();
+    console.log("Drag leave called");
     setDragOver(false);
-  }, []);
+  };
+
   const handleDrop = (e: DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     setDragOver(false);
     const files = e.dataTransfer.files;
     if (files && files[0] && files[0].type.startsWith("image/")) {
@@ -70,7 +74,7 @@ export const UploadDropZone: FunctionComponent<UploadDropzoneProps> = ({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+        <div className="pointer-events-none flex flex-col items-center justify-center pt-5 pb-6">
           <svg
             className="mb-3 h-10 w-10 text-gray-400"
             fill="none"
