@@ -1,6 +1,7 @@
 "use server";
 import { app } from "src/env";
 import { prismaClient } from "./prismaClient";
+import { ImageType } from "@prisma/client";
 /**
 {
     "result": {
@@ -53,21 +54,37 @@ export const uploadImage = async (
     );
     const result: Result = await response.json();
 
-    if (result?.success) {
-      // Save the image to the database
-      await prismaClient.images.create({
-        data: {
-          id: result.result.id,
-          filename: result.result.filename,
-          uploaded: new Date(result.result.uploaded),
-          original: result.result.variants[0],
-          thumbnail: result.result.variants[1],
-        },
-      });
-    }
     return result;
   } catch (e) {
     // TODO: Snackbar feedback
-    console.error(`Error uploading image: ${e}`);
+    console.error(`Error uploading image to cloudflare: ${e}`);
+  }
+};
+
+export const updateImageDb = async (
+  imageUrl: string,
+  userId: string,
+  type: ImageType,
+  relatedImageId?: number,
+) => {
+  try {
+    const payload = {
+      profileId: userId,
+      url: imageUrl,
+      type: type,
+    };
+    const result = await prismaClient.images.create({
+      data:
+        relatedImageId !== undefined
+          ? {
+              ...payload,
+              relatedTo: relatedImageId,
+            }
+          : payload,
+    });
+    return result;
+  } catch (e) {
+    // TODO: Snackbar feedback
+    console.error(`Error updating db in supabase: ${e}`);
   }
 };

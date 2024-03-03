@@ -14,6 +14,7 @@ export const AuthGuard: FunctionComponent<AuthGuardProps> = ({ children }) => {
     const getSession = async () => {
       try {
         const session = await supabase.auth.getSession();
+
         if (session?.data?.session) {
           if (nonAuthRoutes.includes(pathName as Route)) {
             router.push(Route.DASHBOARD);

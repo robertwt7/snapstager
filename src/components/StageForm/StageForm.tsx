@@ -2,49 +2,31 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import {
-  ChangeEvent,
   FunctionComponent,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { UrlBuilder } from "@bytescale/sdk";
-import { UploadWidgetConfig } from "@bytescale/upload-widget";
-import { UploadDropzone } from "@bytescale/upload-widget-react";
 import { CompareSlider } from "../../components/CompareSlider";
 import LoadingDots from "../LoadingDots";
 import ResizablePanel from "src/components/ResizablePanel";
 import Toggle from "../Toggle";
 import appendNewToName from "../../utils/appendNewToName";
+import { UploadDropZone } from "./UploadDropZone";
 import downloadPhoto from "../../utils/downloadPhoto";
 import DropDown from "../../components/DropDown";
 import { roomType, rooms, themeType, themes } from "../../utils/dropdownTypes";
-import { app } from "src/env";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "src/services";
 import { ImageCanvasEditor } from "../ImageCanvasEditor";
-import { exportMask, getImageDimensions } from "./helpers";
-import { uploadImage } from "src/services/cloudflare";
-
-const options: (userId?: string) => UploadWidgetConfig = (userId?: string) => ({
-  apiKey: app.NEXT_PUBLIC_UPLOAD_API_KEY,
-  maxFileCount: 1,
-  mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
-  editor: { images: { crop: false } },
-  styles: {
-    colors: {
-      primary: "#172D3F", // Primary buttons & links
-      error: "#d23f4d", // Error messages
-    },
-  },
-  path: {
-    folderPath: `/${userId}` ?? "/uploads",
-  },
-});
+import { dataURLtoBlob, exportMask, getImageDimensions } from "./helpers";
+import { updateImageDb, uploadImage } from "src/services/cloudflare";
+import { ImageType } from "@prisma/client";
 
 export const StageForm: FunctionComponent = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
   const [restoredImage, setRestoredImage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [restoredLoaded, setRestoredLoaded] = useState<boolean>(false);
@@ -72,86 +54,61 @@ export const StageForm: FunctionComponent = () => {
     getUser();
   }, []);
 
-  const UploadDropZone = () => (
-    <UploadDropzone
-      options={options(user?.id)}
-      onUpdate={({ uploadedFiles }) => {
-        if (uploadedFiles.length !== 0) {
-          const image = uploadedFiles[0];
-          const imageName = image.originalFile.originalFileName;
-          const imageUrl = UrlBuilder.url({
-            accountId: image.accountId,
-            filePath: image.filePath,
-            options: {
-              transformation: "preset",
-              transformationPreset: "thumbnail",
-            },
-          });
-          setPhotoName(imageName);
-          setOriginalPhoto(imageUrl);
-          generatePhoto(imageUrl);
-        }
-      }}
-      width="670px"
-      height="250px"
-    />
-  );
+  const handleSubmit = async () => {
+    if (selectedPhoto === null) return;
+    const formData = new FormData();
+    formData.append("file", selectedPhoto);
 
-  const UploadDropZoneCloudFlare = () => {
-    const handleInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files === null) return;
-      const formData = new FormData();
-      formData.append("file", e.target.files[0]);
-
-      try {
+    try {
+      if (user !== null && originalPhoto !== null) {
         const result = await uploadImage(formData);
         if (result?.success) {
-          // Set original photo here
-          setOriginalPhoto(result?.result.variants[0] ?? null);
-          console.log("Image uploaded: ", result);
+          const updateImageStatus = await updateImageDb(
+            result?.result?.variants[0],
+            user.id,
+            ImageType.ORIGINAL,
+          );
+
+          const maskedPhotoUrl = await generateMaskedPhoto(originalPhoto);
+          const maskedPhotoBlob = await dataURLtoBlob(maskedPhotoUrl ?? "");
+          if (maskedPhotoBlob !== undefined) {
+            const maskedPhotoFile = new File(
+              [maskedPhotoBlob],
+              `${photoName}-mask.png`,
+              { type: "image/png" },
+            );
+            const formDataMasked = new FormData();
+            formDataMasked.append("file", maskedPhotoFile);
+            const resultMasked = await uploadImage(formDataMasked, user.id);
+
+            if (resultMasked?.success && updateImageStatus !== undefined) {
+              const updateImageMaskedStatus = await updateImageDb(
+                resultMasked?.result?.variants[0],
+                user.id,
+                ImageType.MASK,
+                updateImageStatus?.id,
+              );
+            }
+            if (result !== undefined && resultMasked !== undefined) {
+              const generatePhotoResult = await generatePhoto(
+                result.result.variants[0],
+                resultMasked.result.variants[0],
+              );
+              if (generatePhotoResult !== undefined) {
+                const updateImageGeneratedStatus = await updateImageDb(
+                  generatePhotoResult,
+                  user.id,
+                  ImageType.FINAL,
+                  updateImageStatus?.id,
+                );
+              }
+            }
+          }
         }
-      } catch (e) {
-        console.log("Upload image error: ", e);
       }
-    };
-    return (
-      <div className="flex items-center justify-center w-full max-w-sm">
-        <label
-          htmlFor="dropzone-file"
-          className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-        >
-          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg
-              className="w-10 h-10 mb-3 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-              ></path>
-            </svg>
-            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-semibold">Click to upload</span> or drag and
-              drop
-            </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              PNG or JPG
-            </p>
-          </div>
-          <input
-            id="dropzone-file"
-            type="file"
-            className="hidden"
-            onChange={handleInputChange}
-          />
-        </label>
-      </div>
-    );
+    } catch (e) {
+      console.log("Upload image error: ", e);
+    }
   };
 
   const generateMaskedPhoto = async (url: string) => {
@@ -165,15 +122,15 @@ export const StageForm: FunctionComponent = () => {
       return image;
     } catch (e) {
       // TODO: Snackbar for error
+      console.log("Error at maskedPhoto generation: ", e);
     }
   };
 
   const generatePhoto = useCallback(
-    async (fileUrl: string) => {
+    async (fileUrl: string, maskedFileUrl: string) => {
       await new Promise((resolve) => setTimeout(resolve, 200));
       setLoading(true);
       try {
-        const maskedImage = await generateMaskedPhoto(originalPhoto ?? "");
         const res = await fetch("/generate", {
           method: "POST",
           headers: {
@@ -181,7 +138,7 @@ export const StageForm: FunctionComponent = () => {
           },
           body: JSON.stringify({
             imageUrl: fileUrl,
-            imageMaskUrl: maskedImage,
+            imageMaskUrl: maskedFileUrl,
             theme,
             room,
           }),
@@ -192,29 +149,31 @@ export const StageForm: FunctionComponent = () => {
           setError(newPhoto);
         } else {
           setRestoredImage(newPhoto[1]);
+          return newPhoto[1];
         }
       } catch (e) {
-        // TODO: Snackbar
+        // TODO: Snackbar for error
+        console.log("Error at generatePhoto to backend", e);
       }
       setTimeout(() => {
         setLoading(false);
       }, 1300);
     },
-    [room, theme, originalPhoto],
+    [room, theme],
   );
 
   return (
-    <div className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
-      <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal sm:text-6xl mb-5">
+    <div className="mt-4 mb-8 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mb-0">
+      <h1 className="font-display mx-auto mb-5 max-w-4xl text-4xl font-bold tracking-normal sm:text-6xl">
         Stage your room
       </h1>
       <ResizablePanel>
         <AnimatePresence mode="wait">
-          <motion.div className="flex justify-between items-center w-full flex-col mt-4">
+          <motion.div className="mt-4 flex w-full flex-col items-center justify-between">
             {!restoredImage && (
               <>
-                <div className="space-y-4 w-full max-w-sm">
-                  <div className="flex mt-3 items-center space-x-3">
+                <div className="w-full max-w-sm space-y-4">
+                  <div className="mt-3 flex items-center space-x-3">
                     <Image
                       src="/number-1.svg"
                       width={30}
@@ -231,8 +190,8 @@ export const StageForm: FunctionComponent = () => {
                     themes={themes}
                   />
                 </div>
-                <div className="space-y-4 w-full max-w-sm">
-                  <div className="flex mt-10 items-center space-x-3">
+                <div className="w-full max-w-sm space-y-4">
+                  <div className="mt-10 flex items-center space-x-3">
                     <Image
                       src="/number-2.svg"
                       width={30}
@@ -250,7 +209,7 @@ export const StageForm: FunctionComponent = () => {
                   />
                 </div>
                 <div className="mt-4 w-full max-w-sm">
-                  <div className="flex mt-6 w-96 items-center space-x-3">
+                  <div className="mt-6 flex w-96 items-center space-x-3">
                     <Image
                       src="/number-3.svg"
                       width={30}
@@ -287,28 +246,37 @@ export const StageForm: FunctionComponent = () => {
                 restored={restoredImage!}
               />
             )}
-            {!originalPhoto && <UploadDropZoneCloudFlare />}
+            {!originalPhoto && (
+              <UploadDropZone
+                setSelectedPhoto={setSelectedPhoto}
+                setOriginalPhoto={setOriginalPhoto}
+                setPhotoName={setPhotoName}
+              />
+            )}
             {originalPhoto && !restoredImage && (
               <div className="relative">
                 <Image
                   alt="original photo"
                   ref={imageRef}
                   src={originalPhoto}
-                  className="rounded-2xl w-100 h-auto"
+                  className="w-100 h-auto rounded-2xl"
                   width={600}
                   height={475}
                 />
-                <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-                  <div className="relative w-full h-full">
-                    <button
-                      onClick={() => {
-                        setClear(clear + 1);
-                      }}
-                      className="z-10 absolute top-4 left-4 rounded-xl border-primary border text-sm text-white px-5 py-2 hover:bg-primary/90 bg-primary font-medium transition shadow-md"
-                    >
-                      Clear
-                    </button>
-                    <div className="opacity-40 w-full h-full">
+                <div className="absolute top-0 left-0 h-full w-full overflow-hidden">
+                  <div className="relative h-full w-full">
+                    <div className="absolute top-4 left-4 z-10 flex flex-row space-x-4">
+                      <button
+                        onClick={() => {
+                          setClear(clear + 1);
+                        }}
+                        className="rounded-xl border border-primary bg-primary px-5 py-2 text-sm font-medium text-white shadow-md transition hover:bg-primary/90"
+                      >
+                        Clear
+                      </button>
+                    </div>
+
+                    <div className="h-full w-full opacity-40">
                       <ImageCanvasEditor ref={canvasDrawingRef} clear={clear} />
                     </div>
                   </div>
@@ -316,24 +284,24 @@ export const StageForm: FunctionComponent = () => {
               </div>
             )}
             {restoredImage && originalPhoto && !sideBySide && (
-              <div className="flex sm:space-x-4 sm:flex-row flex-col">
+              <div className="flex flex-col sm:flex-row sm:space-x-4">
                 <div>
-                  <h2 className="mb-1 font-medium text-lg">Original Room</h2>
+                  <h2 className="mb-1 text-lg font-medium">Original Room</h2>
                   <Image
                     alt="original photo"
                     src={originalPhoto}
-                    className="rounded-2xl relative w-full h-96"
+                    className="relative h-96 w-full rounded-2xl"
                     width={475}
                     height={475}
                   />
                 </div>
-                <div className="sm:mt-0 mt-8">
-                  <h2 className="mb-1 font-medium text-lg">Generated Room</h2>
+                <div className="mt-8 sm:mt-0">
+                  <h2 className="mb-1 text-lg font-medium">Generated Room</h2>
                   <a href={restoredImage} target="_blank" rel="noreferrer">
                     <Image
                       alt="restored photo"
                       src={restoredImage}
-                      className="rounded-2xl relative sm:mt-0 mt-2 cursor-zoom-in w-full h-96"
+                      className="relative mt-2 h-96 w-full cursor-zoom-in rounded-2xl sm:mt-0"
                       width={475}
                       height={475}
                       onLoadingComplete={() => setRestoredLoaded(true)}
@@ -345,7 +313,7 @@ export const StageForm: FunctionComponent = () => {
             {loading && (
               <button
                 disabled
-                className="bg-primary rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 w-40"
+                className="mt-8 w-40 rounded-full bg-primary px-4 pt-2 pb-3 font-medium text-white"
               >
                 <span className="pt-4">
                   <LoadingDots color="white" style="large" />
@@ -354,32 +322,43 @@ export const StageForm: FunctionComponent = () => {
             )}
             {error && (
               <div
-                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mt-8"
+                className="mt-8 rounded-xl border border-red-400 bg-red-100 px-4 py-3 text-red-700"
                 role="alert"
               >
                 <span className="block sm:inline">{error}</span>
               </div>
             )}
-            <div className="flex space-x-2 justify-center">
+            <div className="flex justify-center space-x-2">
               {originalPhoto && !loading && (
-                <button
-                  onClick={() => {
-                    setOriginalPhoto(null);
-                    setRestoredImage(null);
-                    setRestoredLoaded(false);
-                    setError(null);
-                  }}
-                  className="bg-primary rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-blue-500/80 transition"
-                >
-                  Generate New Room
-                </button>
+                <>
+                  <button
+                    onClick={() => {
+                      setOriginalPhoto(null);
+                      setSelectedPhoto(null);
+                      setRestoredImage(null);
+                      setRestoredLoaded(false);
+                      setError(null);
+                    }}
+                    className="mt-8 rounded-full bg-primary px-4 py-2 font-medium text-white transition hover:bg-blue-500/80"
+                  >
+                    Clear Room
+                  </button>
+                  <button
+                    onClick={() => {
+                      generateMaskedPhoto(originalPhoto);
+                    }}
+                    className="mt-8 rounded-full bg-primary px-4 py-2 font-medium text-white transition hover:bg-blue-500/80"
+                  >
+                    Submit for Staging
+                  </button>
+                </>
               )}
               {restoredLoaded && (
                 <button
                   onClick={() => {
                     downloadPhoto(restoredImage!, appendNewToName(photoName!));
                   }}
-                  className="bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition"
+                  className="mt-8 rounded-full border bg-white px-4 py-2 font-medium text-black transition hover:bg-gray-100"
                 >
                   Download Generated Room
                 </button>

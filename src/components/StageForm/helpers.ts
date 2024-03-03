@@ -24,6 +24,16 @@ export const exportMask = (
   return maskDataURL;
 };
 
+export const dataURLtoBlob = async (dataUrl: string) => {
+  try {
+    const response = await fetch(dataUrl);
+    const blob = await response.blob();
+    return blob;
+  } catch (e) {
+    console.log("Error at dataURLtoBlob", e);
+  }
+};
+
 // Example usage
 /**
 const imageUrl = "https://example.com/path/to/image.jpg";

@@ -244,7 +244,7 @@ model Profile {
 
   firstName    String
   lastName     String
-  credit       Int            @default(0)
+  credit       Int            @default(2)
   Transactions Transactions[]
   Images       Images[]
 
@@ -263,7 +263,8 @@ model Images {
   id        Int       @id @default(autoincrement())
   profileId String    @db.Uuid
   profile   Profile   @relation(fields: [profileId], references: [uid])
-  url  String    // This is the unique id of the image in the hosted service (cloudflare)
+  url       String // This is the unique id of the image in the hosted service (cloudflare)
+  relatedTo Int?      // This is the id of the original image that this image is related to, only for type MASK and FINAL
   type      ImageType
   updatedAt DateTime  @updatedAt
   createdAt DateTime  @default(now())
