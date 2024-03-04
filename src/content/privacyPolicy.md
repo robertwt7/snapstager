@@ -158,7 +158,7 @@ This Notice is current as of the Effective Date set forth above. This Notice may
 
 ## **Contacting Us.**
 
-If you have any questions or comments about this Notice, please contact us at hello@snapstager.com. For questions or comments outside of the Privacy Notice, please contact us at hello@snapstager.com.
+If you have any questions or comments about this Notice, please contact us at robert@snapstager.com. For questions or comments outside of the Privacy Notice, please contact us at robert@snapstager.com.
 
 ## **Sharing Personal Information.**
 
@@ -184,7 +184,7 @@ You have the right to request that we disclose certain information to you about 
 
 ## **Deletion Request Rights.**
 
-You have the right to request that we delete any of your Personal Information that we have collected from you and retained, subject to certain exceptions. All deletion requests will be managed in accordance with SnapStager Deletion Procedures. Deletion requests should be sent to hello@snapstager.com. Once we receive and confirm your verifiable request, we will delete (and direct our Service Providers to delete) your Personal Information from our records, unless an exception applies.
+You have the right to request that we delete any of your Personal Information that we have collected from you and retained, subject to certain exceptions. All deletion requests will be managed in accordance with SnapStager Deletion Procedures. Deletion requests should be sent to robert@snapstager.com. Once we receive and confirm your verifiable request, we will delete (and direct our Service Providers to delete) your Personal Information from our records, unless an exception applies.
 
 We may deny your deletion request if retaining the information is necessary for us or our service providers to:
 
@@ -198,7 +198,7 @@ We may deny your deletion request if retaining the information is necessary for 
 
 ## **Exercising Access, Data Portability, and Deletion Rights.**
 
-To exercise the access, data portability, and deletion rights described above, please submit a verifiable consumer request to us by reaching out to hello@snapstager.com.
+To exercise the access, data portability, and deletion rights described above, please submit a verifiable consumer request to us by reaching out to robert@snapstager.com.
 
 The request must:
 

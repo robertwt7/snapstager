@@ -4,8 +4,8 @@ import { Authentication } from "src/components/Authentication/Authentication";
 
 const LoginPage: NextPage = () => {
   return (
-    <div className="flex min-h-screen justify-center items-center mx-auto">
-      <main className="w-3/4 md:w-1/3 mx-8 flex-col items-center justify-center">
+    <div className="mx-auto flex min-h-screen items-center justify-center">
+      <main className="mx-8 w-3/4 flex-col items-center justify-center md:w-1/3">
         <Authentication />
       </main>
     </div>

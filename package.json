@@ -4,6 +4,7 @@
     "dev": "next dev",
     "generate": "prisma generate",
     "build": "next build",
+    "postinstall": "prisma generate",
     "start": "next start"
   },
   "dependencies": {

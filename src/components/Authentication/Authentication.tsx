@@ -21,11 +21,12 @@ export const Authentication: FunctionComponent = () => {
     });
 
     return () => subscription.unsubscribe();
-  });
+  }, [router]);
+
   return (
     <AuthGuard>
       <div className="flex flex-col items-center">
-        <div className="relative md:h-[90px] md:w-[300px] w-[200px] h-[60px] ">
+        <div className="relative h-[60px] w-[200px] md:h-[90px] md:w-[300px] ">
           <Image
             alt="logo text"
             src="/logo.png"

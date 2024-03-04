@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import { CompareSlider } from "../../components/CompareSlider";
-import LoadingDots from "../LoadingDots";
+import { LoadingDots } from "../LoadingDots";
 import ResizablePanel from "src/components/ResizablePanel";
 import Toggle from "../Toggle";
 import appendNewToName from "../../utils/appendNewToName";
@@ -23,6 +23,7 @@ import { ImageCanvasEditor } from "../ImageCanvasEditor";
 import { dataURLtoBlob, exportMask, getImageDimensions } from "./helpers";
 import { updateImageDb, uploadImage } from "src/services/cloudflare";
 import { ImageType } from "@prisma/client";
+import { updateUserProfile } from "./actions";
 
 export const StageForm: FunctionComponent = () => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
@@ -61,8 +62,10 @@ export const StageForm: FunctionComponent = () => {
 
     try {
       if (user !== null && originalPhoto !== null) {
+        setLoading(true);
         const result = await uploadImage(formData);
         if (result?.success) {
+          const updateUserProfileResult = await updateUserProfile(user.id);
           const updateImageStatus = await updateImageDb(
             result?.result?.variants[0],
             user.id,
@@ -108,6 +111,8 @@ export const StageForm: FunctionComponent = () => {
       }
     } catch (e) {
       console.log("Upload image error: ", e);
+      setLoading(false);
+      setError("Upload image error, please try again");
     }
   };
 
@@ -217,7 +222,7 @@ export const StageForm: FunctionComponent = () => {
                       alt="1 icon"
                     />
                     <p className="text-left font-medium">
-                      Upload a picture of your room.
+                      Upload a picture of the room and mask it.
                     </p>
                   </div>
                 </div>
@@ -344,9 +349,7 @@ export const StageForm: FunctionComponent = () => {
                     Clear Room
                   </button>
                   <button
-                    onClick={() => {
-                      generateMaskedPhoto(originalPhoto);
-                    }}
+                    onClick={handleSubmit}
                     className="mt-8 rounded-full bg-primary px-4 py-2 font-medium text-white transition hover:bg-blue-500/80"
                   >
                     Submit for Staging

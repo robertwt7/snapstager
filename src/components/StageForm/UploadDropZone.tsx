@@ -22,20 +22,16 @@ export const UploadDropZone: FunctionComponent<UploadDropzoneProps> = ({
 
   const handleDragOver = (e: DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
-    e.stopPropagation();
     setDragOver(true);
   };
 
   const handleDragLeave = (e: DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
-    e.stopPropagation();
-    console.log("Drag leave called");
     setDragOver(false);
   };
 
   const handleDrop = (e: DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
-    e.stopPropagation();
     setDragOver(false);
     const files = e.dataTransfer.files;
     if (files && files[0] && files[0].type.startsWith("image/")) {
@@ -43,6 +39,7 @@ export const UploadDropZone: FunctionComponent<UploadDropzoneProps> = ({
       setSelectedPhoto(file);
       const fileUrl = URL.createObjectURL(file);
       setOriginalPhoto(fileUrl);
+      setPhotoName(file?.name?.split(".")[0] ?? "");
     }
   };
   const defaultClassNames =
@@ -53,15 +50,13 @@ export const UploadDropZone: FunctionComponent<UploadDropzoneProps> = ({
 
   const handleInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
-    const formData = new FormData();
-    formData.append("file", e.target.files[0]);
 
     if (e.target.files[0].type.startsWith("image/")) {
       const file = e.target.files[0];
       setSelectedPhoto(file);
       const fileUrl = URL.createObjectURL(file);
       setOriginalPhoto(fileUrl);
-      setPhotoName(file.name);
+      setPhotoName(file?.name?.split(".")[0] ?? "");
     }
   };
   return (

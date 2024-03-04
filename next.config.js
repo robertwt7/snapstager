@@ -2,6 +2,13 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["upcdn.io", "replicate.delivery", "fastly.picsum.photos"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "imagedelivery.net",
+        port: "",
+        pathname: "/BgV_WlP8hqrpHlx1eQd6Xg/**",
+      },
+    ],
   },
 };

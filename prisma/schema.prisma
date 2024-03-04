@@ -242,8 +242,8 @@ model Profile {
   user users  @relation(fields: [uid], references: [id])
   uid  String @id @unique @db.Uuid
 
-  firstName    String
-  lastName     String
+  firstName    String?
+  lastName     String?
   credit       Int            @default(2)
   Transactions Transactions[]
   Images       Images[]

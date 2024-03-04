@@ -4,17 +4,19 @@ import "src/styles/globals.css";
 
 const title = "Virtual Staging using AI";
 const description = "Highly Realistic Virtual Staging in a Snap.";
+// TODO: Update this image with the correct one
 const ogimage = "https://roomgpt-demo.vercel.app/og-image.png";
 const sitename = "snapstager.com";
 
 export const metadata: Metadata = {
   title,
+  metadataBase: new URL("https://snapstager.com"),
   description,
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
-    images: [ogimage],
+    images: ogimage,
     title,
     description,
     url: "https://roomgpt-demo.vercel.app",
@@ -24,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    images: [ogimage],
+    images: ogimage,
     title,
     description,
   },

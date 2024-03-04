@@ -42,22 +42,25 @@ export const uploadImage = async (
 ): Promise<Result | undefined> => {
   try {
     const response = await fetch(
-      `https://api.cloudflare.com/client/v4/accounts/${app.NEXT_PUBLIC_ACCOUNT_ID}/images/v1`,
+      `https://api.cloudflare.com/client/v4/accounts/${app.NEXT_PUBLIC_CLOUDFLARE_ACCOUNT_ID}/images/v1`,
       {
         method: "POST",
         headers: {
           Authorization: `Bearer ${app.NEXT_PUBLIC_CLOUDFLARE_TOKEN}`,
-          "Content-Type": "multipart/form-data",
         },
         body: formData,
       },
     );
     const result: Result = await response.json();
-
-    return result;
+    if (result.success) {
+      return result;
+    } else {
+      throw new Error("Error uploading image to cloudflare");
+    }
   } catch (e) {
     // TODO: Snackbar feedback
     console.error(`Error uploading image to cloudflare: ${e}`);
+    throw new Error("Something went wrong when uploading image");
   }
 };
 
