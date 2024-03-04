@@ -59,15 +59,18 @@ export const StageForm: FunctionComponent = () => {
     if (selectedPhoto === null) return;
     const formData = new FormData();
     formData.append("file", selectedPhoto);
+    const regex = /\/original$/;
 
     try {
       if (user !== null && originalPhoto !== null) {
         setLoading(true);
         const result = await uploadImage(formData);
+        const resultOriginalVariant =
+          result?.result?.variants.find((variant) => regex.test(variant)) ?? "";
         if (result?.success) {
           const updateUserProfileResult = await updateUserProfile(user.id);
           const updateImageStatus = await updateImageDb(
-            result?.result?.variants[0],
+            resultOriginalVariant,
             user.id,
             ImageType.ORIGINAL,
           );
@@ -83,10 +86,14 @@ export const StageForm: FunctionComponent = () => {
             const formDataMasked = new FormData();
             formDataMasked.append("file", maskedPhotoFile);
             const resultMasked = await uploadImage(formDataMasked, user.id);
+            const resultMaskedOriginalVariant =
+              resultMasked?.result?.variants.find((variant) =>
+                regex.test(variant),
+              ) ?? "";
 
             if (resultMasked?.success && updateImageStatus !== undefined) {
               const updateImageMaskedStatus = await updateImageDb(
-                resultMasked?.result?.variants[0],
+                resultMaskedOriginalVariant,
                 user.id,
                 ImageType.MASK,
                 updateImageStatus?.id,
@@ -94,12 +101,27 @@ export const StageForm: FunctionComponent = () => {
             }
             if (result !== undefined && resultMasked !== undefined) {
               const generatePhotoResult = await generatePhoto(
-                result.result.variants[0],
-                resultMasked.result.variants[0],
+                resultOriginalVariant,
+                resultMaskedOriginalVariant,
               );
               if (generatePhotoResult !== undefined) {
+                const generatedPhotoBlob =
+                  await dataURLtoBlob(generatePhotoResult);
+                const formDataFinal = new FormData();
+                if (generatedPhotoBlob === undefined) return;
+                formDataFinal.append(
+                  "file",
+                  generatedPhotoBlob,
+                  `${photoName}-final.jpg`,
+                );
+                const resultFinal = await uploadImage(formDataFinal, user.id);
+                const resultFinalOriginalVariant =
+                  resultFinal?.result?.variants.find((variant) =>
+                    regex.test(variant),
+                  ) ?? "";
+
                 const updateImageGeneratedStatus = await updateImageDb(
-                  generatePhotoResult,
+                  resultFinalOriginalVariant,
                   user.id,
                   ImageType.FINAL,
                   updateImageStatus?.id,
@@ -110,7 +132,6 @@ export const StageForm: FunctionComponent = () => {
         }
       }
     } catch (e) {
-      console.log("Upload image error: ", e);
       setLoading(false);
       setError("Upload image error, please try again");
     }
@@ -151,10 +172,11 @@ export const StageForm: FunctionComponent = () => {
 
         const newPhoto = await res.json();
         if (res.status !== 200) {
-          setError(newPhoto);
+          setError(newPhoto?.message ?? newPhoto);
+          return undefined;
         } else {
-          setRestoredImage(newPhoto[1]);
-          return newPhoto[1];
+          setRestoredImage(newPhoto[0]);
+          return newPhoto[0];
         }
       } catch (e) {
         // TODO: Snackbar for error
@@ -169,7 +191,7 @@ export const StageForm: FunctionComponent = () => {
 
   return (
     <div className="mt-4 mb-8 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mb-0">
-      <h1 className="font-display mx-auto mb-5 max-w-4xl text-4xl font-bold tracking-normal sm:text-6xl">
+      <h1 className="font-display mx-auto mb-5 max-w-4xl text-4xl font-bold tracking-normal md:text-6xl">
         Stage your room
       </h1>
       <ResizablePanel>
@@ -289,14 +311,14 @@ export const StageForm: FunctionComponent = () => {
               </div>
             )}
             {restoredImage && originalPhoto && !sideBySide && (
-              <div className="flex flex-col sm:flex-row sm:space-x-4">
+              <div className="flex flex-col sm:space-x-4 md:flex-row">
                 <div>
                   <h2 className="mb-1 text-lg font-medium">Original Room</h2>
                   <Image
                     alt="original photo"
                     src={originalPhoto}
-                    className="relative h-96 w-full rounded-2xl"
-                    width={475}
+                    className="w-100 relative h-auto rounded-2xl"
+                    width={600}
                     height={475}
                   />
                 </div>
@@ -306,10 +328,10 @@ export const StageForm: FunctionComponent = () => {
                     <Image
                       alt="restored photo"
                       src={restoredImage}
-                      className="relative mt-2 h-96 w-full cursor-zoom-in rounded-2xl sm:mt-0"
-                      width={475}
+                      className="w-100 relative mt-2 h-auto cursor-zoom-in rounded-2xl sm:mt-0"
+                      width={600}
                       height={475}
-                      onLoadingComplete={() => setRestoredLoaded(true)}
+                      onLoad={() => setRestoredLoaded(true)}
                     />
                   </a>
                 </div>

@@ -15,6 +15,10 @@ export const exportMask = (
     ctx.fillRect(0, 0, originalWidth, originalHeight);
     // Draw the mask canvas onto the new canvas with resizing
     ctx.drawImage(canvasRef, 0, 0, originalWidth, originalHeight);
+
+    // Add greyscale at the top left pixel to make this image at least 3 channels as a workaround for cloudflare
+    ctx.fillStyle = "rgb(128, 128, 128)";
+    ctx.fillRect(0, 0, 1, 1);
   }
 
   // Export the canvas to an image format, e.g., PNG

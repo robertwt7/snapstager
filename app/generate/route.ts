@@ -13,7 +13,7 @@ const ratelimit = redis
     })
   : undefined;
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<NextResponse | Response> {
   // Rate Limiter Code
   if (ratelimit) {
     const headersList = headers();
@@ -81,11 +81,19 @@ export async function POST(request: Request) {
     } else if (jsonFinalResponse.status === "failed") {
       break;
     } else {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
     }
   }
 
-  return NextResponse.json(
-    restoredImage ? restoredImage : "Failed to restore image",
-  );
+  if (restoredImage === null) {
+    return NextResponse.json(
+      {
+        message: "Failed to restore image",
+      },
+      {
+        status: 400,
+      },
+    );
+  }
+  return NextResponse.json(restoredImage);
 }

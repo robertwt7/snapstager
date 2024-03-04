@@ -9,6 +9,11 @@ module.exports = {
         port: "",
         pathname: "/BgV_WlP8hqrpHlx1eQd6Xg/**",
       },
+      {
+        protocol: "https",
+        hostname: "replicate.delivery",
+        port: "",
+      },
     ],
   },
 };
