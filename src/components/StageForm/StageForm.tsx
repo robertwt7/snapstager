@@ -126,6 +126,7 @@ export const StageForm: FunctionComponent = () => {
                   ImageType.FINAL,
                   updateImageStatus?.id,
                 );
+                setLoading(false);
               }
             }
           }
@@ -155,7 +156,6 @@ export const StageForm: FunctionComponent = () => {
   const generatePhoto = useCallback(
     async (fileUrl: string, maskedFileUrl: string) => {
       await new Promise((resolve) => setTimeout(resolve, 200));
-      setLoading(true);
       try {
         const res = await fetch("/generate", {
           method: "POST",
@@ -182,9 +182,6 @@ export const StageForm: FunctionComponent = () => {
         // TODO: Snackbar for error
         console.log("Error at generatePhoto to backend", e);
       }
-      setTimeout(() => {
-        setLoading(false);
-      }, 1300);
     },
     [room, theme],
   );
