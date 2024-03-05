@@ -68,7 +68,7 @@ export const StageForm: FunctionComponent = () => {
         const resultOriginalVariant =
           result?.result?.variants.find((variant) => regex.test(variant)) ?? "";
         if (result?.success) {
-          const updateUserProfileResult = await updateUserProfile(user.id);
+          await updateUserProfile(user.id);
           const updateImageStatus = await updateImageDb(
             resultOriginalVariant,
             user.id,
@@ -85,14 +85,14 @@ export const StageForm: FunctionComponent = () => {
             );
             const formDataMasked = new FormData();
             formDataMasked.append("file", maskedPhotoFile);
-            const resultMasked = await uploadImage(formDataMasked, user.id);
+            const resultMasked = await uploadImage(formDataMasked);
             const resultMaskedOriginalVariant =
               resultMasked?.result?.variants.find((variant) =>
                 regex.test(variant),
               ) ?? "";
 
             if (resultMasked?.success && updateImageStatus !== undefined) {
-              const updateImageMaskedStatus = await updateImageDb(
+              await updateImageDb(
                 resultMaskedOriginalVariant,
                 user.id,
                 ImageType.MASK,
@@ -114,13 +114,13 @@ export const StageForm: FunctionComponent = () => {
                   generatedPhotoBlob,
                   `${photoName}-final.jpg`,
                 );
-                const resultFinal = await uploadImage(formDataFinal, user.id);
+                const resultFinal = await uploadImage(formDataFinal);
                 const resultFinalOriginalVariant =
                   resultFinal?.result?.variants.find((variant) =>
                     regex.test(variant),
                   ) ?? "";
 
-                const updateImageGeneratedStatus = await updateImageDb(
+                await updateImageDb(
                   resultFinalOriginalVariant,
                   user.id,
                   ImageType.FINAL,
@@ -139,17 +139,19 @@ export const StageForm: FunctionComponent = () => {
   };
 
   const generateMaskedPhoto = async (url: string) => {
-    try {
-      const imageDimension = await getImageDimensions(url);
-      const image = exportMask(
-        canvasDrawingRef.current,
-        imageDimension.width,
-        imageDimension.height,
-      );
-      return image;
-    } catch (e) {
-      // TODO: Snackbar for error
-      console.log("Error at maskedPhoto generation: ", e);
+    if (canvasDrawingRef.current !== null) {
+      try {
+        const imageDimension = await getImageDimensions(url);
+        const image = exportMask(
+          canvasDrawingRef.current,
+          imageDimension.width,
+          imageDimension.height,
+        );
+        return image;
+      } catch (e) {
+        // TODO: Snackbar for error
+        console.log("Error at maskedPhoto generation: ", e);
+      }
     }
   };
 

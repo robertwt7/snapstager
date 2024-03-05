@@ -7,7 +7,7 @@ export default function SignedInLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+    <div className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center py-2">
       <Header />
       {children}
       <Footer />

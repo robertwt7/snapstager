@@ -18,7 +18,7 @@ export default function Toggle({
     <Switch.Group as="div" {...props}>
       <div className="flex items-center">
         <span
-          className={`text-sm mr-3 font-medium ${
+          className={`mr-3 text-sm font-medium ${
             !sideBySide ? "text-white" : "text-gray-500"
           }`}
         >

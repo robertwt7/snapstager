@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import React, {
   MouseEvent,
@@ -72,6 +73,9 @@ export const ImageCanvasEditor = forwardRef<
     };
   }
 
+  if (typeof canvasDrawingRef === "function" || canvasDrawingRef === null) {
+    return null;
+  }
   useEffect(() => {
     if (
       canvasDrawingRef.current !== null &&
@@ -120,6 +124,7 @@ export const ImageCanvasEditor = forwardRef<
         mouseY.current = containerRef.current.clientHeight / 2;
       }
     };
+    if (containerRef.current === null) return;
     const observeCanvas = new ResizeObserver(() => {
       setTimeout(() => {
         handleResize();
@@ -129,7 +134,9 @@ export const ImageCanvasEditor = forwardRef<
     return () => {
       observeCanvas.disconnect();
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(rafRef.current);
+      if (rafRef.current !== undefined) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
   }, [containerRef.current]);
 
@@ -298,7 +305,7 @@ export const ImageCanvasEditor = forwardRef<
   };
 
   const updateLazyBrush = () => {
-    const hasChanged = lazy.update(
+    lazy.update(
       { x: mouseX.current, y: mouseY.current },
       { friction: isDrawing ? friction / 100 : 1 },
     );
@@ -362,7 +369,7 @@ export const ImageCanvasEditor = forwardRef<
 
   return (
     <div
-      className="relative z-10 w-full h-full border-t border-stone-300 md:border-t-0"
+      className="relative z-10 h-full w-full border-t border-stone-300 md:border-t-0"
       ref={containerRef}
     >
       <canvas

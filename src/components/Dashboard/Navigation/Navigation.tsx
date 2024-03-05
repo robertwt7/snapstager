@@ -72,7 +72,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                 {/* Sidebar component, swap this element with another sidebar if you like */}
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-primary px-6 pb-4">
                   <div className="flex h-[90px] shrink-0 items-center">
-                    <div className="relative md:h-[90px] md:w-[300px] w-[200px] h-[60px] ">
+                    <div className="relative h-[60px] w-[200px] md:h-[90px] md:w-[300px] ">
                       <Image
                         alt="logo text"
                         src="/logo-white.png"
@@ -92,8 +92,8 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                                 className={classNames(
                                   item.current
                                     ? "bg-indigo-700 text-white"
-                                    : "text-indigo-200 hover:text-white hover:bg-indigo-700",
-                                  "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
+                                    : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                                  "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                                 )}
                               >
                                 <item.icon
@@ -182,8 +182,8 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                         className={classNames(
                           item.current
                             ? "bg-indigo-700 text-white"
-                            : "text-indigo-200 hover:text-white hover:bg-indigo-700",
-                          "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
+                            : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                          "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                         )}
                       >
                         <item.icon

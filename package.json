@@ -5,7 +5,9 @@
     "generate": "prisma generate",
     "build": "next build",
     "postinstall": "prisma generate",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint . --fix --ext .ts,.tsx",
+    "tsc": "tsc"
   },
   "dependencies": {
     "@bytescale/upload-widget-react": "^4.9.0",
