@@ -249,7 +249,7 @@ export const StageForm: FunctionComponent = () => {
             )}
             {restoredImage && (
               <div>
-                Here&apos;s your remodeled <b>{room.toLowerCase()}</b> in the{" "}
+                Here&apos;s your staged <b>{room.toLowerCase()}</b> in the{" "}
                 <b>{theme.toLowerCase()}</b> theme!{" "}
               </div>
             )}

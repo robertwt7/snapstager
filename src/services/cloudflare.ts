@@ -1,5 +1,5 @@
 "use server";
-import { app } from "src/env";
+import { api } from "src/env";
 import { prismaClient } from "./prismaClient";
 import { ImageType } from "@prisma/client";
 /**
@@ -42,11 +42,11 @@ export const uploadImage = async (
 ): Promise<Result | undefined> => {
   try {
     const response = await fetch(
-      `https://api.cloudflare.com/client/v4/accounts/${app.NEXT_PUBLIC_CLOUDFLARE_ACCOUNT_ID}/images/v1`,
+      `https://api.cloudflare.com/client/v4/accounts/${api.CLOUDFLARE_ACCOUNT_ID}/images/v1`,
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${app.NEXT_PUBLIC_CLOUDFLARE_TOKEN}`,
+          Authorization: `Bearer ${api.CLOUDFLARE_TOKEN}`,
         },
         body: formData,
       },
