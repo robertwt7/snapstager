@@ -35,5 +35,6 @@ export const getAllImages = async (
     return result;
   } catch (e) {
     console.log("Error getting images from db: ", e);
+    throw new Error("Error getting images from db");
   }
 };

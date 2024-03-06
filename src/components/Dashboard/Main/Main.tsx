@@ -1,18 +1,15 @@
 "use client";
 import { FunctionComponent } from "react";
+import { PricingTable } from "src/components/PricingTable/PricingTable";
 import { StageForm } from "src/components/StageForm";
+import { useUserData } from "src/helpers";
 
 export const Main: FunctionComponent = () => {
-  return (
-    <StageForm />
-    // <div className="h-screen flex flex-col overflow-hidden">
-    //   <button
-    //     onClick={() => setClear(clear + 1)}
-    //     className="rounded-xl border-primary border text-sm text-white px-5 py-2 hover:bg-primary/90 bg-primary font-medium transition shadow-md"
-    //   >
-    //     Clear
-    //   </button>
-    //   <ImageCanvasEditor clear={clear} ref={canvasDrawingRef} />
-    // </div>
+  const { credit, userSession } = useUserData();
+
+  return userSession !== null && credit !== 0 ? (
+    <StageForm user={userSession} />
+  ) : (
+    <PricingTable />
   );
 };

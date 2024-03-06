@@ -1,10 +1,11 @@
+"use client";
 import { FunctionComponent, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { BoltIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import { classNames } from "src/utils/classNames";
 import { userNavigation } from "src/constants/navigation";
-
+import { useUserData } from "src/helpers";
 interface HeaderProps {
   handleSidebarOpen: (arg0: boolean) => void;
 }
@@ -12,6 +13,7 @@ interface HeaderProps {
 export const Header: FunctionComponent<HeaderProps> = ({
   handleSidebarOpen,
 }) => {
+  const { credit } = useUserData();
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
       <button
@@ -61,7 +63,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
                   className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                   aria-hidden="true"
                 >
-                  20 Credits
+                  {`${credit} credits`}
                 </span>
                 <ChevronDownIcon
                   className="ml-2 h-5 w-5 text-gray-400"

@@ -1,13 +1,7 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FunctionComponent, useCallback, useRef, useState } from "react";
 import { CompareSlider } from "../../components/CompareSlider";
 import { LoadingDots } from "../LoadingDots";
 import ResizablePanel from "src/components/ResizablePanel";
@@ -17,15 +11,17 @@ import { UploadDropZone } from "./UploadDropZone";
 import downloadPhoto from "../../utils/downloadPhoto";
 import DropDown from "../../components/DropDown";
 import { roomType, rooms, themeType, themes } from "../../utils/dropdownTypes";
-import { User } from "@supabase/supabase-js";
-import { supabase } from "src/services";
 import { ImageCanvasEditor } from "../ImageCanvasEditor";
 import { dataURLtoBlob, exportMask, getImageDimensions } from "./helpers";
 import { updateImageDb, uploadImage } from "src/services/cloudflare";
 import { ImageType } from "@prisma/client";
 import { updateUserProfile } from "./actions";
+import { User } from "@supabase/supabase-js";
 
-export const StageForm: FunctionComponent = () => {
+interface StageFormProps {
+  user: User;
+}
+export const StageForm: FunctionComponent<StageFormProps> = ({ user }) => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
   const [restoredImage, setRestoredImage] = useState<string | null>(null);
@@ -36,24 +32,9 @@ export const StageForm: FunctionComponent = () => {
   const [photoName, setPhotoName] = useState<string | null>(null);
   const [theme, setTheme] = useState<themeType>("Cozy");
   const [room, setRoom] = useState<roomType>("Living Room");
-  const [user, setUser] = useState<User | null>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasDrawingRef = useRef<HTMLCanvasElement>(null);
   const [clear, setClear] = useState(0);
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const user = await supabase.auth.getUser();
-        if (user?.data !== null) {
-          setUser(user.data.user);
-        }
-      } catch (error) {
-        // TODO: handle error with snackbar
-      }
-    };
-    getUser();
-  }, []);
 
   const handleSubmit = async () => {
     if (selectedPhoto === null) return;
@@ -62,7 +43,7 @@ export const StageForm: FunctionComponent = () => {
     const regex = /\/original$/;
 
     try {
-      if (user !== null && originalPhoto !== null) {
+      if (originalPhoto !== null) {
         setLoading(true);
         const result = await uploadImage(formData);
         const resultOriginalVariant =

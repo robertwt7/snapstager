@@ -13,14 +13,6 @@ export default function Footer() {
         >
           Replicate,{" "}
         </a>
-        <a
-          href="https://www.bytescale.com/"
-          target="_blank"
-          rel="noreferrer"
-          className="font-bold underline-offset-2 transition hover:text-gray-300 hover:underline"
-        >
-          Bytescale,{" "}
-        </a>
         and{" "}
         <a
           href="https://vercel.com/"
