@@ -7,6 +7,8 @@ export const api: ApiType = {
   CLOUDFLARE_ACCOUNT_ID: process.env.CLOUDFLARE_ACCOUNT_ID ?? "",
   CLOUDFLARE_TOKEN: process.env.CLOUDFLARE_TOKEN ?? "",
   ZONE_ID: process.env.ZONE_ID ?? "",
+  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY ?? "",
+  STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET ?? "",
 };
 
 export const app: AppType = {

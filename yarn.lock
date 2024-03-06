@@ -5069,7 +5069,7 @@ __metadata:
     remark: "npm:^15.0.1"
     remark-html: "npm:^16.0.1"
     request-ip: "npm:^3.3.0"
-    stripe: "npm:^14.14.0"
+    stripe: "npm:^14.19.0"
     tailwindcss: "npm:^3.2.4"
     to-vfile: "npm:^8.0.0"
     typescript: "npm:^5.3.3"
@@ -5420,13 +5420,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stripe@npm:^14.14.0":
-  version: 14.14.0
-  resolution: "stripe@npm:14.14.0"
+"stripe@npm:^14.19.0":
+  version: 14.19.0
+  resolution: "stripe@npm:14.19.0"
   dependencies:
     "@types/node": "npm:>=8.1.0"
     qs: "npm:^6.11.0"
-  checksum: 10c0/77dc847d9e458e0c13b31ea84b7a9178f8844f52afee4d9cb06211420dc164efa53d5774dbca33be54a8717252df148fc7e93003351bc85fa731e56afd17e131
+  checksum: 10c0/2ded93390fbdc55cafe265e8311746b75706f0eb9ec0fa259b8558aefa44f06b5fd4b5281ee27f1da8b2c0b943488f8a6cf952766cefdd7c851602880f8a0aca
   languageName: node
   linkType: hard
 

@@ -10,4 +10,6 @@ export interface ApiType {
   ZONE_ID: string;
   CLOUDFLARE_ACCOUNT_ID: string;
   CLOUDFLARE_TOKEN: string;
+  STRIPE_SECRET_KEY: string;
+  STRIPE_WEBHOOK_SECRET: string;
 }

@@ -140,7 +140,7 @@ export const StageForm: FunctionComponent<StageFormProps> = ({ user }) => {
     async (fileUrl: string, maskedFileUrl: string) => {
       await new Promise((resolve) => setTimeout(resolve, 200));
       try {
-        const res = await fetch("/generate", {
+        const res = await fetch("/api/generate", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
