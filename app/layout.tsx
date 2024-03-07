@@ -5,7 +5,7 @@ import "src/styles/globals.css";
 const title = "Virtual Staging using AI";
 const description = "Highly Realistic Virtual Staging in a Snap.";
 // TODO: Update this image with the correct one
-const ogimage = "https://roomgpt-demo.vercel.app/og-image.png";
+const ogimage = "https://snapstager.com/og-image.png";
 const sitename = "snapstager.com";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     images: ogimage,
     title,
     description,
-    url: "https://roomgpt-demo.vercel.app",
+    url: "https://snapstager.com",
     siteName: sitename,
     locale: "en_US",
     type: "website",

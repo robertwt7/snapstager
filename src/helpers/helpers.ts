@@ -1,6 +1,6 @@
 "use client";
 import { User } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { supabase } from "src/services";
 import { getCredit } from "./actions";
 
@@ -26,6 +26,7 @@ export const useUserSession = (): User | null => {
 interface UseUserDataReturn {
   credit: number;
   userSession: User | null;
+  setUserCredit: Dispatch<SetStateAction<number>>;
 }
 export const useUserData = (): UseUserDataReturn => {
   const user = useUserSession();
@@ -49,5 +50,6 @@ export const useUserData = (): UseUserDataReturn => {
   return {
     credit: userCredit,
     userSession: user,
+    setUserCredit,
   };
 };

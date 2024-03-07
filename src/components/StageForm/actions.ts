@@ -25,3 +25,22 @@ export const updateUserProfile = async (userId: string) => {
     console.log(`Error updating user profile: ${e}`);
   }
 };
+
+export const reduceUserCredit = async (userId: string) => {
+  try {
+    const result = await prismaClient.profile.update({
+      where: {
+        uid: userId,
+      },
+      data: {
+        credit: {
+          decrement: 1,
+        },
+      },
+    });
+    return result;
+  } catch (e) {
+    console.log("Error updating user credit");
+    throw new Error("Error updating user credit");
+  }
+};

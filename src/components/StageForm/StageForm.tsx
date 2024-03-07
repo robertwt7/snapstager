@@ -1,7 +1,14 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { FunctionComponent, useCallback, useRef, useState } from "react";
+import {
+  Dispatch,
+  FunctionComponent,
+  SetStateAction,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import { CompareSlider } from "../../components/CompareSlider";
 import { LoadingDots } from "../LoadingDots";
 import ResizablePanel from "src/components/ResizablePanel";
@@ -15,13 +22,19 @@ import { ImageCanvasEditor } from "../ImageCanvasEditor";
 import { dataURLtoBlob, exportMask, getImageDimensions } from "./helpers";
 import { updateImageDb, uploadImage } from "src/services/cloudflare";
 import { ImageType } from "@prisma/client";
-import { updateUserProfile } from "./actions";
+import { reduceUserCredit, updateUserProfile } from "./actions";
 import { User } from "@supabase/supabase-js";
 
 interface StageFormProps {
   user: User;
+  credit: number;
+  setUserCredit: Dispatch<SetStateAction<number>>;
 }
-export const StageForm: FunctionComponent<StageFormProps> = ({ user }) => {
+export const StageForm: FunctionComponent<StageFormProps> = ({
+  user,
+  credit,
+  setUserCredit,
+}) => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
   const [restoredImage, setRestoredImage] = useState<string | null>(null);
@@ -107,6 +120,8 @@ export const StageForm: FunctionComponent<StageFormProps> = ({ user }) => {
                   ImageType.FINAL,
                   updateImageStatus?.id,
                 );
+                await reduceUserCredit(user.id);
+                setUserCredit(credit - 1); // optimistic update without refetching server
                 setLoading(false);
               }
             }
@@ -266,7 +281,7 @@ export const StageForm: FunctionComponent<StageFormProps> = ({ user }) => {
                   alt="original photo"
                   ref={imageRef}
                   src={originalPhoto}
-                  className="w-100 h-auto rounded-2xl"
+                  className="h-auto rounded-2xl"
                   width={600}
                   height={475}
                 />
@@ -297,7 +312,7 @@ export const StageForm: FunctionComponent<StageFormProps> = ({ user }) => {
                   <Image
                     alt="original photo"
                     src={originalPhoto}
-                    className="w-100 relative h-auto rounded-2xl"
+                    className="relative h-auto rounded-2xl"
                     width={600}
                     height={475}
                   />
@@ -308,7 +323,7 @@ export const StageForm: FunctionComponent<StageFormProps> = ({ user }) => {
                     <Image
                       alt="restored photo"
                       src={restoredImage}
-                      className="w-100 relative mt-2 h-auto cursor-zoom-in rounded-2xl sm:mt-0"
+                      className="relative mt-2 h-auto cursor-zoom-in rounded-2xl sm:mt-0"
                       width={600}
                       height={475}
                       onLoad={() => setRestoredLoaded(true)}
@@ -348,14 +363,16 @@ export const StageForm: FunctionComponent<StageFormProps> = ({ user }) => {
                     }}
                     className="mt-8 rounded-full bg-primary px-4 py-2 font-medium text-white transition hover:bg-blue-500/80"
                   >
-                    Clear Room
+                    Clear
                   </button>
-                  <button
-                    onClick={handleSubmit}
-                    className="mt-8 rounded-full bg-primary px-4 py-2 font-medium text-white transition hover:bg-blue-500/80"
-                  >
-                    Submit for Staging
-                  </button>
+                  {!restoredImage && (
+                    <button
+                      onClick={handleSubmit}
+                      className="mt-8 rounded-full bg-primary px-4 py-2 font-medium text-white transition hover:bg-blue-500/80"
+                    >
+                      Submit for Staging
+                    </button>
+                  )}
                 </>
               )}
               {restoredLoaded && (
