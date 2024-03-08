@@ -239,7 +239,7 @@ model sso_providers {
 
 model Profile {
   // This relation should reference the "auth.users" table
-  user users  @relation(fields: [uid], references: [id])
+  user users  @relation(fields: [uid], references: [id], onDelete: Cascade)
   uid  String @id @unique @db.Uuid
 
   firstName    String?

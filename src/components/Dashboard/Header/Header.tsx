@@ -1,7 +1,7 @@
 "use client";
 import { FunctionComponent, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import { Bars3Icon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { BoltIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import { classNames } from "src/utils/classNames";
 import { userNavigation } from "src/constants/navigation";
@@ -47,11 +47,13 @@ export const Header: FunctionComponent<HeaderProps> = ({
           />
         </form> */}
         <div className="flex items-center gap-x-4 lg:gap-x-6">
+          <div>
+            <a href="mailto:robert@snapstager.com">
+              <QuestionMarkCircleIcon className="h-6 w-6 text-black" />
+            </a>
+          </div>
           {/* Separator */}
-          <div
-            className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
-            aria-hidden="true"
-          />
+          <div className="block h-6 w-px bg-gray-900/10" />
 
           {/* Profile dropdown */}
           <Menu as="div" className="relative">

@@ -22,7 +22,7 @@ import { ImageCanvasEditor } from "../ImageCanvasEditor";
 import { dataURLtoBlob, exportMask, getImageDimensions } from "./helpers";
 import { updateImageDb, uploadImage } from "src/services/cloudflare";
 import { ImageType } from "@prisma/client";
-import { reduceUserCredit, updateUserProfile } from "./actions";
+import { reduceUserCredit } from "./actions";
 import { User } from "@supabase/supabase-js";
 
 interface StageFormProps {
@@ -62,7 +62,6 @@ export const StageForm: FunctionComponent<StageFormProps> = ({
         const resultOriginalVariant =
           result?.result?.variants.find((variant) => regex.test(variant)) ?? "";
         if (result?.success) {
-          await updateUserProfile(user.id);
           const updateImageStatus = await updateImageDb(
             resultOriginalVariant,
             user.id,
