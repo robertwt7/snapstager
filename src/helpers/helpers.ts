@@ -4,6 +4,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { supabase } from "src/services";
 import { getCredit } from "./actions";
 
+export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 export const useUserSession = (): User | null => {
   const [user, setUser] = useState<null | User>(null);
   useEffect(() => {
@@ -24,7 +26,7 @@ export const useUserSession = (): User | null => {
 };
 
 interface UseUserDataReturn {
-  credit: number;
+  userCredit: number;
   userSession: User | null;
   setUserCredit: Dispatch<SetStateAction<number>>;
 }
@@ -40,7 +42,7 @@ export const useUserData = (): UseUserDataReturn => {
             setUserCredit(credit.credit);
           }
         } catch (e) {
-          console.log("Error fetching credit from db");
+          console.log("Error fetching credit from db", e);
         }
       }
     };
@@ -48,7 +50,7 @@ export const useUserData = (): UseUserDataReturn => {
   }, [user]);
 
   return {
-    credit: userCredit,
+    userCredit,
     userSession: user,
     setUserCredit,
   };

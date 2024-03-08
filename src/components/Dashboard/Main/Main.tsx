@@ -1,18 +1,13 @@
 "use client";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext } from "react";
 import { PricingTable } from "src/components/PricingTable/PricingTable";
 import { StageForm } from "src/components/StageForm";
-import { useUserData } from "src/helpers";
+import { UserContext } from "../Layout/UserContext";
 
 export const Main: FunctionComponent = () => {
-  const { credit, userSession, setUserCredit } = useUserData();
-
-  return userSession !== null && credit > 0 ? (
-    <StageForm
-      user={userSession}
-      credit={credit}
-      setUserCredit={setUserCredit}
-    />
+  const { userCredit, userSession } = useContext(UserContext);
+  return userSession !== null && userCredit > 0 ? (
+    <StageForm user={userSession} />
   ) : (
     <PricingTable />
   );

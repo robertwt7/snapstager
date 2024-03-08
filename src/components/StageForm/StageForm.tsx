@@ -2,10 +2,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import {
-  Dispatch,
   FunctionComponent,
-  SetStateAction,
   useCallback,
+  useContext,
   useRef,
   useState,
 } from "react";
@@ -23,18 +22,11 @@ import { dataURLtoBlob, exportMask, getImageDimensions } from "./helpers";
 import { updateImageDb, uploadImage } from "src/services/cloudflare";
 import { ImageType } from "@prisma/client";
 import { reduceUserCredit } from "./actions";
+import { sleep } from "src/helpers";
+import { UserContext } from "../Dashboard/Layout/UserContext";
 import { User } from "@supabase/supabase-js";
 
-interface StageFormProps {
-  user: User;
-  credit: number;
-  setUserCredit: Dispatch<SetStateAction<number>>;
-}
-export const StageForm: FunctionComponent<StageFormProps> = ({
-  user,
-  credit,
-  setUserCredit,
-}) => {
+export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
   const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
   const [restoredImage, setRestoredImage] = useState<string | null>(null);
@@ -48,7 +40,7 @@ export const StageForm: FunctionComponent<StageFormProps> = ({
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasDrawingRef = useRef<HTMLCanvasElement>(null);
   const [clear, setClear] = useState(0);
-
+  const { setUserCredit, userCredit: credit } = useContext(UserContext);
   const handleSubmit = async () => {
     if (selectedPhoto === null) return;
     const formData = new FormData();
@@ -122,6 +114,10 @@ export const StageForm: FunctionComponent<StageFormProps> = ({
                 await reduceUserCredit(user.id);
                 setUserCredit(credit - 1); // optimistic update without refetching server
                 setLoading(false);
+                setRestoredImage(generatePhotoResult);
+              } else {
+                setLoading(false);
+                setError("Please try again!");
               }
             }
           }
@@ -167,17 +163,36 @@ export const StageForm: FunctionComponent<StageFormProps> = ({
           }),
         });
 
-        const newPhoto = await res.json();
-        if (res.status !== 200) {
-          setError(newPhoto?.message ?? newPhoto);
+        let prediction = await res.json();
+        if (res.status !== 201) {
+          setError(prediction.message);
           return undefined;
-        } else {
-          setRestoredImage(newPhoto[0]);
-          return newPhoto[0];
         }
+
+        let counter = 0;
+        const predictionId = prediction.id;
+        while (
+          prediction.status !== "succeeded" &&
+          prediction.status !== "failed" &&
+          counter < 60
+        ) {
+          await sleep(5000);
+          const response = await fetch("/api/predictions/" + predictionId);
+          prediction = await response.json();
+          if (response.status !== 200) {
+            setError(prediction.message);
+          }
+          counter++; // retry until 300s
+          if (prediction.status === "succeeded") {
+            return prediction.output[0];
+          }
+        }
+
+        return undefined;
       } catch (e) {
         // TODO: Snackbar for error
         console.log("Error at generatePhoto to backend", e);
+        throw new Error("Error at the predictions");
       }
     },
     [room, theme],
@@ -288,6 +303,7 @@ export const StageForm: FunctionComponent<StageFormProps> = ({
                   <div className="relative h-full w-full">
                     <div className="absolute top-4 left-4 z-10 flex flex-row space-x-4">
                       <button
+                        disabled={loading}
                         onClick={() => {
                           setClear(clear + 1);
                         }}
@@ -332,14 +348,24 @@ export const StageForm: FunctionComponent<StageFormProps> = ({
               </div>
             )}
             {loading && (
-              <button
-                disabled
-                className="mt-8 w-40 rounded-full bg-primary px-4 pt-2 pb-3 font-medium text-white"
-              >
-                <span className="pt-4">
-                  <LoadingDots color="white" style="large" />
-                </span>
-              </button>
+              <>
+                <div
+                  className="mt-8 rounded-xl border border-blue-400 bg-blue-100 px-4 py-3 text-blue-700"
+                  role="alert"
+                >
+                  <span className="block sm:inline">
+                    Please do not refresh the screen!
+                  </span>
+                </div>
+                <button
+                  disabled
+                  className="mt-8 w-40 rounded-full bg-primary px-4 pt-2 pb-3 font-medium text-white"
+                >
+                  <span className="pt-4">
+                    <LoadingDots color="white" style="large" />
+                  </span>
+                </button>
+              </>
             )}
             {error && (
               <div

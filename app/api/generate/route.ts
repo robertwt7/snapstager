@@ -1,8 +1,23 @@
 import { NextResponse } from "next/server";
 import { api } from "src/env";
 
-export const maxDuration = 180; // This function can run for a maximum of 5 seconds
-
+export const maxDuration = 10; // 10s is the max for the hobby version
+interface Prediction {
+  id: string;
+  model: string;
+  version: string;
+  input: {
+    [key: string]: string;
+  };
+  logs: string;
+  error: null | string;
+  status: "starting" | "processing" | "succeeded" | "failed" | "cancelled";
+  created_at: string;
+  urls: {
+    cancel: string;
+    get: string;
+  };
+}
 export async function POST(request: Request): Promise<NextResponse | Response> {
   const { imageUrl, imageMaskUrl, theme, room } = await request.json();
 
@@ -28,44 +43,14 @@ export async function POST(request: Request): Promise<NextResponse | Response> {
       },
     );
 
-    const jsonStartResponse = await startResponse.json();
-
-    const endpointUrl = jsonStartResponse.urls.get;
-
-    // GET request to get the status of the image restoration process & return the result when it's ready
-    let restoredImage: string | null = null;
-    while (!restoredImage) {
-      // Loop in 1s intervals until the alt text is ready
-      console.log("polling for result...");
-      const finalResponse = await fetch(endpointUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Token " + api.REPLICATE_API_KEY,
-        },
-      });
-      const jsonFinalResponse = await finalResponse.json();
-
-      if (jsonFinalResponse.status === "succeeded") {
-        restoredImage = jsonFinalResponse.output;
-      } else if (jsonFinalResponse.status === "failed") {
-        break;
-      } else {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-      }
-    }
-
-    if (restoredImage === null) {
+    const jsonStartResponse: Prediction = await startResponse.json();
+    if (startResponse.status !== 201) {
       return NextResponse.json(
-        {
-          message: "Failed to restore image",
-        },
-        {
-          status: 400,
-        },
+        { message: jsonStartResponse.error },
+        { status: 500 },
       );
     }
-    return NextResponse.json(restoredImage);
+    return NextResponse.json(jsonStartResponse, { status: 201 });
   } catch (e) {
     return NextResponse.json(
       {

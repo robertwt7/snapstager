@@ -1,11 +1,11 @@
 "use client";
-import { FunctionComponent, Fragment } from "react";
+import { FunctionComponent, Fragment, useContext } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { BoltIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import { classNames } from "src/utils/classNames";
 import { userNavigation } from "src/constants/navigation";
-import { useUserData } from "src/helpers";
+import { UserContext } from "../Layout/UserContext";
 interface HeaderProps {
   handleSidebarOpen: (arg0: boolean) => void;
 }
@@ -13,7 +13,7 @@ interface HeaderProps {
 export const Header: FunctionComponent<HeaderProps> = ({
   handleSidebarOpen,
 }) => {
-  const { credit } = useUserData();
+  const { userCredit: credit } = useContext(UserContext);
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
       <button
