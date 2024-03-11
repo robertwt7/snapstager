@@ -40,7 +40,7 @@ export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasDrawingRef = useRef<HTMLCanvasElement>(null);
   const [clear, setClear] = useState(0);
-  const { setUserCredit, userCredit: credit } = useContext(UserContext);
+  const { setUserProfile, userProfile } = useContext(UserContext);
   const handleSubmit = async () => {
     if (selectedPhoto === null) return;
     const formData = new FormData();
@@ -112,7 +112,10 @@ export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
                   updateImageStatus?.id,
                 );
                 await reduceUserCredit(user.id);
-                setUserCredit(credit - 1); // optimistic update without refetching server
+                setUserProfile({
+                  ...userProfile,
+                  credit: userProfile.credit - 1,
+                }); // optimistic update without refetching server
                 setLoading(false);
                 setRestoredImage(generatePhotoResult);
               } else {
@@ -388,7 +391,7 @@ export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
                     }}
                     className="mt-8 rounded-full bg-primary px-4 py-2 font-medium text-white transition hover:bg-blue-500/80"
                   >
-                    Clear
+                    Clear Photo
                   </button>
                   {!restoredImage && (
                     <button

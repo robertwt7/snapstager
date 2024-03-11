@@ -49,7 +49,7 @@ export const Authentication: FunctionComponent = () => {
             }}
             supabaseClient={supabase}
             providers={["github", "google"]}
-            redirectTo="/dashboard"
+            redirectTo="/dashboard/profile"
           />
         </div>
       </div>

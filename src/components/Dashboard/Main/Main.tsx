@@ -5,8 +5,11 @@ import { StageForm } from "src/components/StageForm";
 import { UserContext } from "../Layout/UserContext";
 
 export const Main: FunctionComponent = () => {
-  const { userCredit, userSession } = useContext(UserContext);
-  return userSession !== null && userCredit > 0 ? (
+  const {
+    userProfile: { credit },
+    userSession,
+  } = useContext(UserContext);
+  return userSession !== null && credit > 0 ? (
     <StageForm user={userSession} />
   ) : (
     <PricingTable />

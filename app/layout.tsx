@@ -1,6 +1,11 @@
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 import "src/styles/globals.css";
+import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { theme } from "src/styles/theme";
+import { Notifications } from "@mantine/notifications";
 
 const title = "Virtual Staging using AI";
 const description = "Highly Realistic Virtual Staging in a Snap.";
@@ -39,8 +44,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full bg-white">
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body className="h-full">
-        {children}
+        <MantineProvider theme={theme}>
+          {children}
+          <Notifications position="bottom-right" />
+        </MantineProvider>
         <Analytics />
       </body>
     </html>

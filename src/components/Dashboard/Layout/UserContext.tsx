@@ -7,25 +7,29 @@ import {
   SetStateAction,
   createContext,
 } from "react";
-import { useUserData } from "src/helpers";
+import { GetProfileReturn, useUserData } from "src/helpers";
 
 interface UserContextValue {
-  userCredit: number;
-  setUserCredit: Dispatch<SetStateAction<number>>;
+  userProfile: GetProfileReturn;
+  setUserProfile: Dispatch<SetStateAction<GetProfileReturn>>;
   userSession: User | null;
 }
 export const UserContext = createContext<UserContextValue>({
-  userCredit: 0,
-  setUserCredit: () => {},
+  userProfile: {
+    firstName: "",
+    lastName: "",
+    credit: 0,
+  },
+  setUserProfile: () => {},
   userSession: null,
 });
 
 export const UserContextProvider: FunctionComponent<{
   children: ReactNode;
 }> = ({ children }) => {
-  const { userCredit, setUserCredit, userSession } = useUserData();
+  const { userProfile, setUserProfile, userSession } = useUserData();
   return (
-    <UserContext.Provider value={{ userCredit, setUserCredit, userSession }}>
+    <UserContext.Provider value={{ userProfile, setUserProfile, userSession }}>
       {children}
     </UserContext.Provider>
   );

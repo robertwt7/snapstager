@@ -248,6 +248,9 @@ model Profile {
   Transactions Transactions[]
   Images       Images[]
 
+  updatedAt DateTime? @updatedAt
+  createdAt DateTime  @default(now())
+
   @@schema("public")
 }
 
@@ -264,7 +267,7 @@ model Images {
   profileId String    @db.Uuid
   profile   Profile   @relation(fields: [profileId], references: [uid])
   url       String // This is the unique id of the image in the hosted service (cloudflare)
-  relatedTo Int?      // This is the id of the original image that this image is related to, only for type MASK and FINAL
+  relatedTo Int? // This is the id of the original image that this image is related to, only for type MASK and FINAL
   type      ImageType
   updatedAt DateTime  @updatedAt
   createdAt DateTime  @default(now())
@@ -273,11 +276,13 @@ model Images {
 }
 
 model Transactions {
-  id        Int      @id @default(autoincrement())
-  profileId String   @db.Uuid
-  profile   Profile  @relation(fields: [profileId], references: [uid])
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
+  id                      Int      @id @default(autoincrement())
+  profileId               String   @db.Uuid
+  profile                 Profile  @relation(fields: [profileId], references: [uid])
+  amount                  Int
+  stripeCheckoutSessionId String
+  updatedAt               DateTime @updatedAt
+  createdAt               DateTime @default(now())
 
   @@schema("public")
 }

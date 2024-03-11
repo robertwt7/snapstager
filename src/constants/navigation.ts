@@ -3,6 +3,7 @@ import {
   DocumentDuplicateIcon,
   HomeIcon,
   BuildingStorefrontIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 
@@ -12,6 +13,7 @@ export enum Route {
   LOGOUT = "/logout",
   SIGNUP = "/signup",
   IMAGES = "/dashboard/images",
+  PROFILE = "/dashboard/profile",
   BUYCREDITS = "/dashboard/buy-credits",
 }
 export const userNavigation = [
@@ -40,7 +42,12 @@ export const useNavigationItems = () => {
       icon: BuildingStorefrontIcon,
       current: pathName === Route.BUYCREDITS,
     },
-    // { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
+    {
+      name: "Profile",
+      href: Route.PROFILE,
+      icon: UserCircleIcon,
+      current: pathName === Route.PROFILE,
+    },
   ];
 };
 export const teams = [

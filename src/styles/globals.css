@@ -1,13 +1,16 @@
-@tailwind base;
-@layer base {
-  h1 {
-    @apply text-3xl my-4;
-  }
-  h2 {
-    @apply text-xl my-2;
-  }
-  h3 {
-    @apply text-lg my-2;
+@layer tailwind {
+  @tailwind base;
+
+  @layer base {
+    h1 {
+      @apply text-4xl my-4;
+    }
+    h2 {
+      @apply text-xl my-2;
+    }
+    h3 {
+      @apply text-lg my-2;
+    }
   }
 }
 @tailwind components;

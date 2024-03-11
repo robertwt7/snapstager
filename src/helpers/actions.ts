@@ -2,7 +2,14 @@
 
 import { prismaClient } from "src/services";
 
-export const getCredit = async (userId: string) => {
+export type GetProfileReturn = {
+  credit: number;
+  firstName: string | null;
+  lastName: string | null;
+};
+export const getProfile = async (
+  userId: string,
+): Promise<GetProfileReturn | null> => {
   try {
     const result = await prismaClient.profile.findFirst({
       where: {
@@ -10,6 +17,8 @@ export const getCredit = async (userId: string) => {
       },
       select: {
         credit: true,
+        firstName: true,
+        lastName: true,
       },
     });
 

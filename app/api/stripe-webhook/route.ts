@@ -33,7 +33,8 @@ export async function POST(request: Request) {
     switch (event.type) {
       case "checkout.session.completed": {
         const checkoutSessionCompleted = event.data.object;
-        const { id, client_reference_id, status } = checkoutSessionCompleted;
+        const { id, client_reference_id, status, amount_total } =
+          checkoutSessionCompleted;
         try {
           if (status === "complete" && client_reference_id !== null) {
             const { line_items } = await stripe.checkout.sessions.retrieve(id, {
@@ -48,6 +49,12 @@ export async function POST(request: Request) {
                   creditMap[
                     line_items?.data[0].price?.product as keyof typeof creditMap
                   ] ?? "",
+                Transactions: {
+                  create: {
+                    stripeCheckoutSessionId: id,
+                    amount: amount_total ?? 0,
+                  },
+                },
               },
             });
           } else {

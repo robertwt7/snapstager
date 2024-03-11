@@ -2,7 +2,7 @@
 import { User } from "@supabase/supabase-js";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { supabase } from "src/services";
-import { getCredit } from "./actions";
+import { GetProfileReturn, getProfile } from "./actions";
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -26,20 +26,24 @@ export const useUserSession = (): User | null => {
 };
 
 interface UseUserDataReturn {
-  userCredit: number;
   userSession: User | null;
-  setUserCredit: Dispatch<SetStateAction<number>>;
+  userProfile: GetProfileReturn;
+  setUserProfile: Dispatch<SetStateAction<GetProfileReturn>>;
 }
 export const useUserData = (): UseUserDataReturn => {
   const user = useUserSession();
-  const [userCredit, setUserCredit] = useState(0);
+  const [userProfile, setUserProfile] = useState<GetProfileReturn>({
+    firstName: "",
+    lastName: "",
+    credit: 0,
+  });
   useEffect(() => {
     const getUserCredit = async () => {
       if (user !== null) {
         try {
-          const credit = await getCredit(user?.id);
-          if (credit) {
-            setUserCredit(credit.credit);
+          const profile = await getProfile(user?.id);
+          if (profile) {
+            setUserProfile(profile);
           }
         } catch (e) {
           console.log("Error fetching credit from db", e);
@@ -50,8 +54,8 @@ export const useUserData = (): UseUserDataReturn => {
   }, [user]);
 
   return {
-    userCredit,
+    userProfile,
     userSession: user,
-    setUserCredit,
+    setUserProfile,
   };
 };
