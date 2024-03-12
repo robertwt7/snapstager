@@ -47,14 +47,12 @@ export const Profile: FunctionComponent = () => {
   });
 
   useEffect(() => {
-    form.setInitialValues({
+    form.setValues({
       firstName: firstName ?? "",
       lastName: lastName ?? "",
-      newPassword: "",
-      confirmPassword: "",
-      password: "",
     });
-  }, [firstName, lastName, form]);
+  }, [firstName, lastName]);
+
   return (
     <div>
       <form
@@ -68,6 +66,12 @@ export const Profile: FunctionComponent = () => {
                 message: "Your Profile Has Successfully been Updated",
                 icon: <IconCheck style={{ width: rem(20), height: rem(20) }} />,
                 color: "teal",
+              });
+
+              form.setValues({
+                confirmPassword: "",
+                password: "",
+                newPassword: "",
               });
             } catch (e) {
               console.log(

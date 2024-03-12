@@ -40,15 +40,19 @@ export async function POST(request: Request) {
             const { line_items } = await stripe.checkout.sessions.retrieve(id, {
               expand: ["line_items"],
             });
+
             await prismaClient.profile.update({
               where: {
                 uid: client_reference_id,
               },
               data: {
-                credit:
-                  creditMap[
-                    line_items?.data[0].price?.product as keyof typeof creditMap
-                  ] ?? "",
+                credit: {
+                  increment:
+                    creditMap[
+                      line_items?.data[0].price
+                        ?.product as keyof typeof creditMap
+                    ] ?? 0,
+                },
                 Transactions: {
                   create: {
                     stripeCheckoutSessionId: id,
