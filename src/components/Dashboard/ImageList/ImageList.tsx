@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import { FunctionComponent, useEffect, useState } from "react";
-import { getAllImages } from "./actions";
-import { supabase } from "src/services";
 import { LoadingDots } from "src/components/LoadingDots";
+import { supabase } from "src/services";
+import { getAllImages } from "./actions";
 
 export const ImageList: FunctionComponent = () => {
   const [lastId, setLastId] = useState<number | null>(null);
@@ -41,8 +41,19 @@ export const ImageList: FunctionComponent = () => {
     };
     getImages();
   }, [lastId]);
-  return (
-    <div className="mt-4 mb-8 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mb-0">
+  return images?.length === 0 ? (
+    <div className="flex w-full flex-col items-center justify-center">
+      <Image
+        alt="No Images"
+        className="h-auto "
+        src="/blank_canvas.png"
+        width={400}
+        height={475}
+      />
+      <p className="text-lg font-medium">Nothing to see here...</p>
+    </div>
+  ) : (
+    <div className="mb-8 mt-4 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mb-0">
       <h1 className="font-display mx-auto mb-8 max-w-4xl text-4xl font-bold tracking-normal sm:text-6xl">
         Images Generated
       </h1>
