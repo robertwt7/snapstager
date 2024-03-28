@@ -1,6 +1,6 @@
 # **Privacy Policy.**
 
-**Effective January 1, 2021**
+**Effective January 28, 2024**
 
 SnapStager (“SnapStager”, “we”, or “us”) recognizes the importance of privacy. We want you to feel confident using our services, and this privacy notice (“Privacy Notice” or “Notice”) is to help you understand and describe how we collect, use, and disclose your information.
 

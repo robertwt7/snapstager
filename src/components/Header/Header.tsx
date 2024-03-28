@@ -23,9 +23,13 @@ export const Header: FunctionComponent = () => {
   }, []);
 
   return (
-    <header className="mt-3 flex w-full flex-row items-center justify-between gap-2 px-2 pb-7 xs:flex-row sm:px-4">
+    <header
+      itemScope
+      itemType="http://schema.org/Organization"
+      className="mt-3 flex w-full flex-row items-center justify-between gap-2 px-2 pb-7 xs:flex-row sm:px-4"
+    >
       <div className="relative h-[60px] w-[200px] md:h-[90px] md:w-[300px] ">
-        <Link href="/">
+        <Link href="/" itemProp="url">
           <Image
             alt="logo text"
             src="/logo.png"
