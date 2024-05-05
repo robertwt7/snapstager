@@ -1,6 +1,13 @@
-# [SnapStager](https://snapstager.com) - Virtual Staging with AI
-
-This is the source code of SnapStager.com (a paid SaaS product). Feel free to play around with and use the code in your project.
+<p align="center">
+  <p align="center">
+    <a href="https://snapstager.com" target="_blank">
+      <img src="./public/logo.png" alt="SnapStager" height="72">
+    </a>
+  </p>
+  <p align="center">
+	This is the source code of SnapStager.com, a SaaS to do Virtual Staging with AI. Feel free to play around with and use the code in your project.
+  </p>
+</p>
 
 [![SnapStager](./public/screenshot.png)](https://snapstager.com)
 
@@ -9,12 +16,13 @@ This is the source code of SnapStager.com (a paid SaaS product). Feel free to pl
 It uses a custom ML model called hosted on replicate similar to Stable Diffusion Inpainting. SnapStager gives you the ability to upload a photo of any room, mask the room in the web using canvas, then send both the original Image and Mask through the ML Model using a Next.js API route, and return your staged room.
 
 Tech stack used for this app are:
+
 - [Replicate](https://replicate.com/) to host the ML Model
 - [Supabase](https://supabase.com/) to host the DB and Auth
 - [Cloudflare](https://developers.cloudflare.com/images/) to host and serve both the original and final image.
 - [Vercel](https://vercel.com) to host the NextJS App
 - [Prisma](https://www.prisma.io/) for the ORM
-- [Stripe] to handle payments
+- [Stripe](https://dashboard.stripe.com/payments) to handle payments
 
 ## Running Locally
 
@@ -52,6 +60,7 @@ Next you need to store the database env which is located at `prisma/env.example`
 5. Repeat step 2 for the `SHADOW_DATABASE_URL` and change the db after `5432/postgres` to `5432/shadow_postgres`
 
 ### Create an account at cloudflare (Need subscription)
+
 1. Go to [Cloudflare](https://www.cloudflare.com/en-gb/) and create an account
 2. Login to dashboard
 3. Go to "Images" at the sidebar, then click "Overview" (you have to subscribe for this)
@@ -60,12 +69,12 @@ Next you need to store the database env which is located at `prisma/env.example`
 6. Create a new one and copy it to the environment file under `CLOUDFLARE_TOKEN`
 
 ### Create a stripe account
+
 1. Go to [Stripe](https://dashboard.stripe.com/)
 2. Create an account
 3. Follow the guide to create a [product catalogue](https://docs.stripe.com/products-prices/getting-started)
 4. Go to each product and copy the ID at the top right to each environment var that starts with `STRIPE_PRICE_ID_<YOUR-VARIANT>`
 5. Finally click "Developers" on the top right menu, then find your API key and create a webhook key with the correct endpoint at `https://yourdomain.com/api/stripe-webhook` and copy it to the environment file.
-
 
 ### Installing the dependencies.
 
