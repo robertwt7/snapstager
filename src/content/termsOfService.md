@@ -2,7 +2,7 @@
 
 ## **Terms of Use.**
 
-**Effective June 29, 2021**
+**Effective January 28, 2024**
 
 Thanks for using SnapStager. These Terms of Use (“Terms” or “Agreement”) are a legal agreement between you and SnapStager (“SnapStager,” “we,” “our,” or “us”) and govern your use of all the text, data, information, software, graphics, photographs and more that we and our affiliates may make available to you (all of which we refer to as “Documentation”), including our websites and any services, plug-ins, software or other Downloadable Tools (as defined below) that we may provide through any of our websites (the “Platform” or “Website” and together with the Materials, these “Service(s)”). SnapStager “Users” are the people who have created a SnapStager account (also referred to as “Customer(s)”), and SnapStager “Invitees” are people who have scheduled a meeting with a SnapStager User but may or may not have registered with SnapStager. A SnapStager “Viewer” is a person who visits the SnapStager Website but may or may not be a SnapStager User or SnapStager Invitee.
 

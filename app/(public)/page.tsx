@@ -27,8 +27,9 @@ const HomePage: NextPage = () => {
         </span>
       </h1>
       <h2 className="mx-auto mt-12 max-w-xl text-lg leading-7">
-        Take a picture of your empty room, mask it, and get it staged in
-        seconds.
+        Simply upload a photo of your empty space, apply our intuitive masking
+        tool, and watch as our AI transforms it into a beautifully staged room
+        in mere seconds.
       </h2>
       <Link
         className="mt-8 rounded-xl bg-primary px-4 py-3 font-medium text-white transition hover:bg-primary/80 sm:mt-10"
@@ -49,7 +50,7 @@ const HomePage: NextPage = () => {
           Result
         </h2>
 
-        <div className="mt-4 mb-16 flex flex-col space-y-10">
+        <div className="mb-16 mt-4 flex flex-col space-y-10" data-nosnippet>
           <div className="flex flex-col sm:flex-row sm:space-x-8">
             <div>
               <h3 className="mb-1 text-lg font-medium">Original Room</h3>

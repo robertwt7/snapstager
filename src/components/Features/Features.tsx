@@ -15,7 +15,8 @@ const features = [
   },
   {
     name: "Lightning Fast",
-    description: "Virtual staging now can be done in seconds.",
+    description:
+      "Thanks to our advanced artificial intelligence virtual staging now can be done in less than 20 seconds. No more waiting for designers!",
     icon: BoltIcon,
   },
   {
@@ -26,19 +27,20 @@ const features = [
   },
   {
     name: "Cheap",
-    description: "Pay $1 instead of $25 for virtual staging",
+    description:
+      "Pay as cheap as $1 per photos, no subscription! That is cheaper than any agencies and tools out there.",
     icon: CurrencyDollarIcon,
   },
 ];
 
 export const Features: FunctionComponent = () => {
   return (
-    <div className="isolate bg-white">
+    <section className="isolate bg-white">
       {/* Feature section */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:whitespace-nowrap">
-            The only solution you need for virtual staging
+            Why Choose Us?
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -54,7 +56,7 @@ export const Features: FunctionComponent = () => {
                   </div>
                   {feature.name}
                 </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-600">
+                <dd className="mt-2 text-left text-base leading-7 text-gray-600">
                   {feature.description}
                 </dd>
               </div>
@@ -62,6 +64,6 @@ export const Features: FunctionComponent = () => {
           </dl>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

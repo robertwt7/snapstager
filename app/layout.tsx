@@ -8,7 +8,8 @@ import { theme } from "src/styles/theme";
 import { Notifications } from "@mantine/notifications";
 
 const title = "Virtual Staging using AI";
-const description = "Highly Realistic Virtual Staging in a Snap.";
+const description =
+  "Transform your property listings with SnapStager's AI-driven virtual staging. Experience seamless, highly realistic designs that captivate and convert. Start now!";
 // TODO: Update this image with the correct one
 const ogimage = "https://snapstager.com/og-image.png";
 const sitename = "snapstager.com";
