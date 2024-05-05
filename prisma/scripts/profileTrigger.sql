@@ -1,4 +1,4 @@
--- inserts a row into public.profiles
+-- inserts a row into public.profiles every time a new user is created with 2 free credits
 create function public.handle_new_user()
 returns trigger
 language plpgsql
