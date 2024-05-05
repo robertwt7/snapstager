@@ -12,4 +12,7 @@ export interface ApiType {
   CLOUDFLARE_TOKEN: string;
   STRIPE_SECRET_KEY: string;
   STRIPE_WEBHOOK_SECRET: string;
+  STRIPE_PRICE_ID_FIVE_CREDIT: string;
+  STRIPE_PRICE_ID_TWENTY_CREDIT: string;
+  STRIPE_PRICE_ID_HUNDRED_CREDIT: string;
 }

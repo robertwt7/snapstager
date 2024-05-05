@@ -7,6 +7,7 @@ import { Route, nonAuthRoutes } from "src/constants/navigation";
 interface AuthGuardProps {
   children: React.ReactNode;
 }
+
 export const AuthGuard: FunctionComponent<AuthGuardProps> = ({ children }) => {
   const router = useRouter();
   const pathName = usePathname();

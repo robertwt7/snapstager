@@ -21,9 +21,9 @@ export async function POST(request: Request) {
       });
     }
 
-    const fiveCredit = "prod_PgdIlJThwNAuPI";
-    const twentyCredit = "prod_PgdM1VW89XiSLl";
-    const hundredCredit = "prod_PgdJOKhLqFvNFM";
+    const fiveCredit = api.STRIPE_PRICE_ID_FIVE_CREDIT;
+    const twentyCredit = api.STRIPE_PRICE_ID_TWENTY_CREDIT;
+    const hundredCredit = api.STRIPE_PRICE_ID_HUNDRED_CREDIT;
     const creditMap = {
       [fiveCredit]: 5,
       [twentyCredit]: 20,

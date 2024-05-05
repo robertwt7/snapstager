@@ -9,6 +9,11 @@ export const api: ApiType = {
   ZONE_ID: process.env.ZONE_ID ?? "",
   STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY ?? "",
   STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET ?? "",
+  STRIPE_PRICE_ID_FIVE_CREDIT: process.env.STRIPE_PRICE_ID_FIVE_CREDIT ?? "",
+  STRIPE_PRICE_ID_TWENTY_CREDIT:
+    process.env.STRIPE_PRICE_ID_TWENTY_CREDIT ?? "",
+  STRIPE_PRICE_ID_HUNDRED_CREDIT:
+    process.env.STRIPE_PRICE_ID_HUNDRED_CREDIT ?? "",
 };
 
 export const app: AppType = {
