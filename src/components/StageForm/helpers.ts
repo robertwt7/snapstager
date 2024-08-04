@@ -31,6 +31,16 @@ export const exportMask = (
   return maskDataURL;
 };
 
+export const isCanvasBlank = (canvasRef: HTMLCanvasElement): boolean => {
+  const blank = document.createElement("canvas");
+  blank.width = canvasRef.width;
+  blank.height = canvasRef.height;
+
+  blank.getContext("2d")?.clearRect(0, 0, canvasRef.width, canvasRef.height);
+
+  return canvasRef.toDataURL() === blank.toDataURL();
+};
+
 export const dataURLtoBlob = async (dataUrl: string) => {
   try {
     const response = await fetch(dataUrl);

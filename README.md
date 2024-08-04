@@ -11,7 +11,9 @@
 
 [![SnapStager](./public/screenshot.png)](https://snapstager.com)
 
+
 ## How it works
+
 
 It uses a custom ML model called hosted on replicate similar to Stable Diffusion Inpainting. SnapStager gives you the ability to upload a photo of any room, mask the room in the web using canvas, then send both the original Image and Mask through the ML Model using a Next.js API route, and return your staged room.
 
@@ -24,6 +26,7 @@ Tech stack used for this app are:
 - [Prisma](https://www.prisma.io/) for the ORM
 - [Stripe](https://dashboard.stripe.com/payments) to handle payments
 
+Check [presentation video](./public/Presentation.mp4) if you want to see how to use.
 ## Running Locally
 
 ### Cloning the repository the local machine.

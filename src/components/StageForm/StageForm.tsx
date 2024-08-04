@@ -18,7 +18,12 @@ import downloadPhoto from "../../utils/downloadPhoto";
 import DropDown from "../../components/DropDown";
 import { roomType, rooms, themeType, themes } from "../../utils/dropdownTypes";
 import { ImageCanvasEditor } from "../ImageCanvasEditor";
-import { dataURLtoBlob, exportMask, getImageDimensions } from "./helpers";
+import {
+  dataURLtoBlob,
+  exportMask,
+  getImageDimensions,
+  isCanvasBlank,
+} from "./helpers";
 import { updateImageDb, uploadImage } from "src/services/cloudflare";
 import { ImageType } from "@prisma/client";
 import { reduceUserCredit } from "./actions";
@@ -42,6 +47,15 @@ export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
   const [clear, setClear] = useState(0);
   const { setUserProfile, userProfile } = useContext(UserContext);
   const handleSubmit = async () => {
+    if (
+      canvasDrawingRef.current !== null &&
+      isCanvasBlank(canvasDrawingRef.current)
+    ) {
+      setError(
+        "Please mask the room before submitting. Draw the mask with your mouse for the part where you want the furniture to be displayed.",
+      );
+      return;
+    }
     if (selectedPhoto === null) return;
     const formData = new FormData();
     formData.append("file", selectedPhoto);
@@ -49,6 +63,7 @@ export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
 
     try {
       if (originalPhoto !== null) {
+        setError(null);
         setLoading(true);
         const result = await uploadImage(formData);
         const resultOriginalVariant =
@@ -132,10 +147,13 @@ export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
     }
   };
 
-  const generateMaskedPhoto = async (url: string) => {
+  /**
+   * Need originalPhotoUrl to get the image dimensions
+   */
+  const generateMaskedPhoto = async (originalPhotoUrl: string) => {
     if (canvasDrawingRef.current !== null) {
       try {
-        const imageDimension = await getImageDimensions(url);
+        const imageDimension = await getImageDimensions(originalPhotoUrl);
         const image = exportMask(
           canvasDrawingRef.current,
           imageDimension.width,
@@ -202,7 +220,7 @@ export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
   );
 
   return (
-    <div className="mt-4 mb-8 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mb-0">
+    <div className="mb-8 mt-4 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mb-0">
       <h1 className="font-display mx-auto mb-5 max-w-4xl text-4xl font-bold tracking-normal md:text-6xl">
         Stage your room
       </h1>
@@ -270,7 +288,7 @@ export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
             )}
             <div
               className={`${
-                restoredLoaded ? "visible mt-6 -ml-8" : "invisible"
+                restoredLoaded ? "visible -ml-8 mt-6" : "invisible"
               }`}
             >
               <Toggle
@@ -302,9 +320,9 @@ export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
                   width={600}
                   height={475}
                 />
-                <div className="absolute top-0 left-0 h-full w-full overflow-hidden">
+                <div className="absolute left-0 top-0 h-full w-full overflow-hidden">
                   <div className="relative h-full w-full">
-                    <div className="absolute top-4 left-4 z-10 flex flex-row space-x-4">
+                    <div className="absolute left-4 top-4 z-10 flex flex-row space-x-4">
                       <button
                         disabled={loading}
                         onClick={() => {
@@ -362,7 +380,7 @@ export const StageForm: FunctionComponent<{ user: User }> = ({ user }) => {
                 </div>
                 <button
                   disabled
-                  className="mt-8 w-40 rounded-full bg-primary px-4 pt-2 pb-3 font-medium text-white"
+                  className="mt-8 w-40 rounded-full bg-primary px-4 pb-3 pt-2 font-medium text-white"
                 >
                   <span className="pt-4">
                     <LoadingDots color="white" style="large" />
