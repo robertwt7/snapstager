@@ -9,7 +9,7 @@ import { Notifications } from "@mantine/notifications";
 
 const title = "Virtual Staging using AI";
 const description =
-  "Transform your property listings with SnapStager's AI-driven virtual staging. Experience seamless, highly realistic designs that captivate and convert. Start now!";
+  "Virtual Staging using AI for only $1 per image. Try for free and increase conversion rate. Highly realistic designs, developed by Sillicon Valley Engineer.";
 // TODO: Update this image with the correct one
 const ogimage = "https://snapstager.com/og-image.png";
 const sitename = "snapstager.com";
