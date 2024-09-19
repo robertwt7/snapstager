@@ -75,7 +75,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                     <div className="relative h-[60px] w-[200px] md:h-[90px] md:w-[300px] ">
                       <Image
                         alt="logo text"
-                        src="/space.png"
+                        src="/ro.png"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
                       />
