@@ -60,7 +60,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
           {/* Profile dropdown */}
           <Menu as="div" className="relative">
             <Menu.Button className="-m-1.5 flex items-center p-1.5">
-              <span className="sr-only">Open user menu</span>
+              <span className="sr-only">Open Menu</span>
               <BoltIcon className="h-6 w-6 text-yellow-600" />
               <span className=" flex items-center">
                 <span
