@@ -46,15 +46,15 @@ export const ImageList: FunctionComponent = () => {
       <Image
         alt="No Images"
         className="h-auto "
-        src="/blank_canvas.png"
+        src="/ques.png"
         width={400}
         height={475}
       />
-      <p className="text-lg font-medium">Nothing to see here...</p>
+      <p className="text-lg font-medium text-white">Nothing to see here...</p>
     </div>
   ) : (
     <div className="mb-8 mt-4 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mb-0">
-      <h1 className="font-display mx-auto mb-8 max-w-4xl text-4xl font-bold tracking-normal sm:text-6xl">
+      <h1 className="font-display mx-auto mb-8 max-w-4xl text-4xl font-bold tracking-normal sm:text-6xl text-white">
         Images Generated
       </h1>
       {error && (
