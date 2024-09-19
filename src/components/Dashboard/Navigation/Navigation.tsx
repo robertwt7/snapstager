@@ -75,7 +75,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                     <div className="relative h-[60px] w-[200px] md:h-[90px] md:w-[300px] ">
                       <Image
                         alt="logo text"
-                        src="/logo-white.png"
+                        src="/space.png"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
                       />
@@ -91,7 +91,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                                 href={item.href}
                                 className={classNames(
                                   item.current
-                                    ? "bg-indigo-700 text-white"
+                                    ? "bg-blue-700 text-white"
                                     : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
                                   "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                                 )}
@@ -165,7 +165,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
             <div className="relative md:h-[75px] md:w-[270px]">
               <Image
                 alt="logo text"
-                src="/logo-white.png"
+                src="/space.png"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
               />
@@ -181,7 +181,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-indigo-700 text-white"
+                            ? "bg-blue-700 text-white"
                             : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
                           "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                         )}
