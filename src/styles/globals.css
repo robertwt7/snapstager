@@ -27,7 +27,7 @@
     @apply absolute top-0 left-0 w-full h-full;
   }
   .slider {
-    @apply range block w-full h-6 bg-white border px-1.5 rounded-full border-stone-300 appearance-none cursor-pointer dark:bg-stone-700;
+    @apply range block w-full h-6 bg-stone-900 border px-1.5 rounded-full border-stone-300 appearance-none cursor-pointer dark:bg-stone-700;
   }
 
   .range {
