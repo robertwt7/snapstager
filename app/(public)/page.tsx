@@ -7,7 +7,7 @@ import { FAQ } from "src/components/faq";
 
 const HomePage: NextPage = () => {
   return (
-    <main className="relative mt-20 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mt-20 bg-stone-900">
+    <main className="relative mt-20 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mt-20">
       <div
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         aria-hidden="true"
