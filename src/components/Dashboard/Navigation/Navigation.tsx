@@ -77,7 +77,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                         alt="logo text"
                         src="/iso.png"
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
+                        sizes="(max-width: 200px) 100vw, (max-width: 200px) 90vw"
                       />
                     </div>
                   </div>
@@ -91,8 +91,8 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                                 href={item.href}
                                 className={classNames(
                                   item.current
-                                    ? "bg-blue-50 text-white"
-                                    : "text-indigo-200 hover:bg-blue-50 hover:text-white",
+                                    ? "bg-blue-50 text-violet-600"
+                                    : "text-indigo-200 hover:bg-blue-50 hover:text-violet-600",
                                   "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                                 )}
                               >
@@ -100,7 +100,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                                   className={classNames(
                                     item.current
                                       ? "text-white"
-                                      : "text-indigo-200 group-hover:text-white",
+                                      : "text-indigo-200 group-hover:text-violet-600",
                                     "h-6 w-6 shrink-0",
                                   )}
                                   aria-hidden="true"
@@ -167,7 +167,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                 alt="logo text"
                 src="/iso.png"
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
+                sizes="(max-width: 200px) 100vw, (max-width: 200px) 90vw"
               />
             </div>
           </div>
@@ -181,16 +181,16 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-blue-50 text-white"
-                            : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                            ? "bg-blue-50 text-violet-600"
+                            : "text-indigo-200 hover:bg-indigo-700 hover:text-violet-600",
                           "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                         )}
                       >
                         <item.icon
                           className={classNames(
                             item.current
-                              ? "text-white"
-                              : "text-indigo-200 group-hover:text-white",
+                              ? "text-violet-600"
+                              : "text-indigo-200 group-hover:text-violet-600",
                             "h-6 w-6 shrink-0",
                           )}
                           aria-hidden="true"
