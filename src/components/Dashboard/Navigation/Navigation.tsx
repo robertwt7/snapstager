@@ -70,12 +70,12 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                   </div>
                 </Transition.Child>
                 {/* Sidebar component, swap this element with another sidebar if you like */}
-                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-primary px-6 pb-4">
+                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-700 px-6 pb-4">
                   <div className="flex h-[90px] shrink-0 items-center">
                     <div className="relative h-[60px] w-[200px] md:h-[90px] md:w-[300px] ">
                       <Image
                         alt="logo text"
-                        src="/ro.png"
+                        src="/iso.png"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
                       />
@@ -91,8 +91,8 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                                 href={item.href}
                                 className={classNames(
                                   item.current
-                                    ? "bg-blue-700 text-white"
-                                    : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                                    ? "bg-blue-50 text-white"
+                                    : "text-indigo-200 hover:bg-blue-50 hover:text-white",
                                   "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                                 )}
                               >
@@ -160,12 +160,12 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
       {/* Static sidebar for desktop */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-primary px-6 pb-4">
+        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-700 px-6 pb-4">
           <div className="flex h-[90px] shrink-0 items-center">
             <div className="relative md:h-[75px] md:w-[270px]">
               <Image
                 alt="logo text"
-                src="/space.png"
+                src="/iso.png"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
               />
@@ -181,7 +181,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-blue-700 text-white"
+                            ? "bg-blue-50 text-white"
                             : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
                           "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                         )}
