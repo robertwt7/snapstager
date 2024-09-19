@@ -9,11 +9,11 @@ const HomePage: NextPage = () => {
   return (
     <main className="relative mt-20 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mt-20 bg-stone-900">
       <div
-        className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80 bg-stone-900"
+        className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         aria-hidden="true"
       >
         <div
-          className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+          className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#FF48FC] to-[#4438FF] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           style={{
             clipPath:
               "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
@@ -26,19 +26,19 @@ const HomePage: NextPage = () => {
           <span className="relative">the Perfect Look</span>
         </span>
       </h1>
-      <h2 className="mx-auto mt-12 max-w-xl text-lg leading-7">
+      <h2 className="mx-auto mt-12 max-w-xl text-lg leading-7 text-white">
         Simply upload a photo of your empty space, apply our intuitive masking
         tool, and watch as our AI transforms it into a beautifully staged room
         in mere seconds.
       </h2>
       <Link
-        className="mt-8 rounded-xl bg-primary px-4 py-3 font-medium text-white transition hover:bg-primary/80 sm:mt-10"
+        className="mt-8 rounded-xl bg-blue-700 px-4 py-3 font-medium text-white transition hover:bg-primary/80 sm:mt-10"
         href="/dashboard"
       >
         Get 2 Free Credits
       </Link>
       <div className="mt-32 flex w-full flex-col items-center justify-center space-y-8 ">
-        <h2 className="mx-auto mt-12 text-5xl font-bold">How it works</h2>
+        <h2 className="mx-auto mt-12 text-5xl font-bold text-white">How it works</h2>
         <PresentationVideo />
       </div>
 
@@ -53,7 +53,7 @@ const HomePage: NextPage = () => {
         <div className="mb-16 mt-4 flex flex-col space-y-10" data-nosnippet>
           <div className="flex flex-col sm:flex-row sm:space-x-8">
             <div>
-              <h3 className="mb-1 text-lg text-white font-medium">Original Room</h3>
+              <h3 className="mb-1 text-lg text-white font-medium text-white">Original Room</h3>
               <Image
                 alt="Original photo of a room with spaceshift.com"
                 src="/original-pic.jpg"
