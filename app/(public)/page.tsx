@@ -7,9 +7,9 @@ import { FAQ } from "src/components/faq";
 
 const HomePage: NextPage = () => {
   return (
-    <main className="relative mt-20 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mt-20">
+    <main className="relative mt-20 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mt-20 bg-stone-900">
       <div
-        className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+        className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80 bg-stone-900"
         aria-hidden="true"
       >
         <div
@@ -20,10 +20,10 @@ const HomePage: NextPage = () => {
           }}
         />
       </div>
-      <h1 className="font-display mx-auto max-w-4xl text-5xl font-bold tracking-normal sm:text-7xl">
-        Virtual Staging{" "}
+      <h1 className="font-display mx-auto max-w-4xl text-5xl text-white font-bold tracking-normal sm:text-7xl">
+        AI-Driven Staging for {" "}
         <span className="relative whitespace-nowrap">
-          <span className="relative">in a SNAP</span>
+          <span className="relative">the Perfect Look</span>
         </span>
       </h1>
       <h2 className="mx-auto mt-12 max-w-xl text-lg leading-7">
@@ -53,9 +53,9 @@ const HomePage: NextPage = () => {
         <div className="mb-16 mt-4 flex flex-col space-y-10" data-nosnippet>
           <div className="flex flex-col sm:flex-row sm:space-x-8">
             <div>
-              <h3 className="mb-1 text-lg font-medium">Original Room</h3>
+              <h3 className="mb-1 text-lg text-white font-medium">Original Room</h3>
               <Image
-                alt="Original photo of a room with snapstager.com"
+                alt="Original photo of a room with spaceshift.com"
                 src="/original-pic.jpg"
                 className="h-96 w-full rounded-2xl object-cover"
                 width={400}
@@ -63,9 +63,9 @@ const HomePage: NextPage = () => {
               />
             </div>
             <div className="mt-8 sm:mt-0">
-              <h3 className="mb-1 text-lg font-medium">Generated Room</h3>
+              <h3 className="mb-1 text-lg font-medium text-white">Generated Room</h3>
               <Image
-                alt="Generated photo of a room with snapstager.com"
+                alt="Generated photo of a room with spaceshift"
                 width={400}
                 height={400}
                 src="/generated-pic-2.png"
