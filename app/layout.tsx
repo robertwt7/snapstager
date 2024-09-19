@@ -7,9 +7,9 @@ import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { theme } from "src/styles/theme";
 import { Notifications } from "@mantine/notifications";
 
-const title = "Virtual Staging using AI";
+const title = "AI-Driven Staging for the Perfect Look";
 const description =
-  "Virtual Staging using AI for only $1 per image. Try for free and increase conversion rate. Highly realistic designs, developed by Sillicon Valley Engineer.";
+  "Stage your room virtually using AI for only $1 per image.";
 // TODO: Update this image with the correct one
 const ogimage = "https://snapstager.com/og-image.png";
 const sitename = "snapstager.com";
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://snapstager.com"),
   description,
   icons: {
-    icon: "/favicon.ico",
+    icon: "/iso.ico",
   },
   openGraph: {
     images: ogimage,
