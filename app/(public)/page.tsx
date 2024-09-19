@@ -20,7 +20,7 @@ const HomePage: NextPage = () => {
           }}
         />
       </div>
-      <h1 className="font-display mx-auto max-w-4xl text-5xl text-white font-bold tracking-normal sm:text-7xl">
+      <h1 className="font-display mx-auto max-w-4xl text-5xl text-white font-bold tracking-normal sm:text-7xl bg-blue-700">
         AI-Driven Staging for {" "}
         <span className="relative whitespace-nowrap">
           <span className="relative">the Perfect Look</span>
