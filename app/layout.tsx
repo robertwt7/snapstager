@@ -7,7 +7,7 @@ import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { theme } from "src/styles/theme";
 import { Notifications } from "@mantine/notifications";
 
-const title = "AI-Driven Staging for the Perfect Look";
+const title = " SpaceShift | AI-Driven Staging for the Perfect Look";
 const description =
   "Stage your room virtually using AI for only $1 per image.";
 // TODO: Update this image with the correct one
