@@ -7,7 +7,7 @@ import { FAQ } from "src/components/faq";
 
 const HomePage: NextPage = () => {
   return (
-    <main className="relative mt-20 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mt-20">
+    <main className="relative mt-20 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mt-20" bg-blue-700>
       <div
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         aria-hidden="true"
@@ -20,7 +20,7 @@ const HomePage: NextPage = () => {
           }}
         />
       </div>
-      <h1 className="font-display mx-auto max-w-4xl text-5xl text-white font-bold tracking-normal sm:text-7xl bg-blue-700">
+      <h1 className="font-display mx-auto max-w-4xl text-5xl text-white font-bold tracking-normal sm:text-7xl">
         AI-Driven Staging for {" "}
         <span className="relative whitespace-nowrap">
           <span className="relative">the Perfect Look</span>
