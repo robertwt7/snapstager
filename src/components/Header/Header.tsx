@@ -32,7 +32,7 @@ export const Header: FunctionComponent = () => {
         <Link href="/" itemProp="url">
           <Image
             alt="logo text"
-            src="/logo.png"
+            src="/main.png"
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw"
           />
