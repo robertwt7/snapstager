@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="mt-5 mb-3 flex h-16 w-full flex-col items-center justify-between space-y-3 border-t border-gray-500 px-3 pt-4 text-center sm:mb-0 sm:h-20 sm:flex-row sm:pt-2">
-      <div className="text-gray-500">
+    <footer className="mt-5 mb-3 flex h-16 w-full flex-col items-center justify-between space-y-3 border-t border-gray-500 px-3 pt-4 text-center sm:mb-0 sm:h-20 sm:flex-row sm:pt-2 bg-stone-900">
+      <div className="text-gray-50">
         Powered by{" "}
         <a
           href="https://replicate.com/"
