@@ -21,8 +21,8 @@ export const PricingTable = () => {
         </h1>
         <div className="mt-8 w-full">
           <stripe-pricing-table
-            pricing-table-id="prctbl_1OrIMPJCBxIyLk4DUbhMpN2v"
-            publishable-key="pk_live_LuPm5zLm8llOnBiswfnHcqXI00NZxyvhRx"
+            pricing-table-id="prctbl_1Q0biaEuRNR1WDrX66n42VXi"
+            publishable-key="pk_live_51PjoJjEuRNR1WDrXMc9opL7x2bGLn58Vx7xWSUD65DlLtGRvMENE5zZNIDTTzYHAy5NdSxsje5PCYN5HvxnIJWyP00vfdUTIkJ"
             client-reference-id={user.id}
           ></stripe-pricing-table>
         </div>
