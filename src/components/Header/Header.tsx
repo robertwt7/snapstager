@@ -39,7 +39,7 @@ export const Header: FunctionComponent = () => {
         </Link>
       </div>
       <Link
-        className="flex max-w-fit items-center justify-center space-x-2 rounded-xl border border-primary bg-primary px-5 py-2 text-sm font-medium text-white shadow-md transition hover:bg-primary/90"
+        className="flex max-w-fit items-center justify-center space-x-2 rounded-xl border border-primary bg-blue-700 px-5 py-2 text-sm font-medium text-white shadow-md transition hover:bg-primary/90"
         href={user !== null ? Route.DASHBOARD : Route.LOGIN}
         rel="noopener noreferrer"
       >
