@@ -34,7 +34,7 @@ export const Header: FunctionComponent = () => {
             alt="logo text"
             src="/ti.png"
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw"
+            
           />
         </Link>
       </div>
