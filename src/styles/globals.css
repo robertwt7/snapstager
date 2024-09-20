@@ -24,7 +24,7 @@
 
 @layer components {
   .canvas {
-    @apply absolute top-0 left-0 w-full h-full;
+    @apply absolute top-0 left-0 w-full h-full bg-stone-900;
   }
   .slider {
     @apply range block w-full h-6 bg-stone-900 border px-1.5 rounded-full border-stone-300 appearance-none cursor-pointer dark:bg-stone-700;
@@ -38,7 +38,7 @@
     }
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
-      @apply w-3 h-3 rounded-full bg-orange-600 shadow-none;
+      @apply w-3 h-3 rounded-full bg-stone-900 shadow-none;
     }
     &.disabled {
       &::-webkit-slider-thumb {
