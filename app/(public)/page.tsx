@@ -63,7 +63,7 @@ const HomePage: NextPage = () => {
               />
             </div>
             <div className="mt-8 sm:mt-0">
-              <h3 className="mb-1 text-lg font-medium text-blue-700">GENERATED/h3>
+              <h3 className="mb-1 text-lg font-medium text-blue-700">GENERATED</h3>
               <Image
                 alt="Generated photo of a room with spaceshift"
                 width={400}
