@@ -77,7 +77,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                         alt="logo text"
                         src="/ti.png"
                         fill
-                        sizes="(max-height: 200px), (max-width: 200px)"
+                        size="height: 200px, width: 200px"
                       />
                     </div>
                   </div>
@@ -167,7 +167,7 @@ export const Navigation: FunctionComponent<NavigationProps> = ({
                 alt="logo text"
                 src="/ti.png"
                 fill
-                sizes="(max-height: 200px), (max-width: 200px)"
+                size="height: 200px, width: 200px"
               />
             </div>
           </div>
