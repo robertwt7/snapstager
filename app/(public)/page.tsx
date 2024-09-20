@@ -20,13 +20,13 @@ const HomePage: NextPage = () => {
           }}
         />
       </div>
-      <h1 className="font-display mx-auto max-w-4xl text-5xl text-white font-bold tracking-normal sm:text-7xl">
+      <h1 className="font-display mx-auto max-w-4xl text-5xl text-blue-700 font-bold tracking-normal sm:text-7xl">
         AI-Driven Staging for {" "}
         <span className="relative whitespace-nowrap">
           <span className="relative">the Perfect Look</span>
         </span>
       </h1>
-      <h2 className="mx-auto mt-12 max-w-xl text-lg leading-7 text-white">
+      <h2 className="mx-auto mt-12 max-w-xl text-lg leading-7 text-blue-700">
         Simply upload a photo of your empty space, apply our intuitive masking
         tool, and watch as our AI transforms it into a beautifully staged room
         in mere seconds.
@@ -53,7 +53,7 @@ const HomePage: NextPage = () => {
         <div className="mb-16 mt-4 flex flex-col space-y-10" data-nosnippet>
           <div className="flex flex-col sm:flex-row sm:space-x-8">
             <div>
-              <h3 className="mb-1 text-lg text-white font-medium text-white">Original Room</h3>
+              <h3 className="mb-1 text-lg text-white font-medium text-blue-700">ORIGINAL</h3>
               <Image
                 alt="Original photo of a room with spaceshift.com"
                 src="/original-pic.jpg"
@@ -63,7 +63,7 @@ const HomePage: NextPage = () => {
               />
             </div>
             <div className="mt-8 sm:mt-0">
-              <h3 className="mb-1 text-lg font-medium text-white">Generated Room</h3>
+              <h3 className="mb-1 text-lg font-medium text-blue-700">GENERATED/h3>
               <Image
                 alt="Generated photo of a room with spaceshift"
                 width={400}
