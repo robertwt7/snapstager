@@ -50,7 +50,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
         </form> */}
         <div className="flex items-center gap-x-4 lg:gap-x-6">
           <div>
-            <a href="mailto:robert@snapstager.com">
+            <a href="Contact:yonis@niddam.com">
               <QuestionMarkCircleIcon className="h-6 w-6 text-black" />
             </a>
           </div>
