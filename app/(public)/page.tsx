@@ -38,7 +38,7 @@ const HomePage: NextPage = () => {
         Get 2 Free Credits
       </Link>
       <div className="mt-32 flex w-full flex-col items-center justify-center space-y-8 ">
-        <h2 className="mx-auto mt-12 text-5xl font-bold text-white">How it works</h2>
+        <h2 className="mx-auto mt-12 text-5xl font-bold text-blue-700">How it works</h2>
         <PresentationVideo />
       </div>
 
