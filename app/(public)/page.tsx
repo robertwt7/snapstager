@@ -46,7 +46,7 @@ const HomePage: NextPage = () => {
         <Features />
       </div>
       <div className="mt-56 flex w-full flex-col items-center justify-between sm:mt-10">
-        <h2 className="mx-auto mt-12 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        <h2 className="mx-auto mt-12 text-3xl font-bold tracking-tight text-blue-700 sm:text-4xl">
           Result
         </h2>
 
