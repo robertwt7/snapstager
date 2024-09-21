@@ -3,7 +3,7 @@ const faqs = [
     id: 1,
     question: "Why does it takes longer for some images to generate?",
     answer:
-      "The GPU that is used at Replicate has Cold Boot time. The first image takes longer to generate. After the first image is generated, the next images will be generated faster. In the future we might rent a dedicated GPU to solve this problem once we have more users",
+      "The GPU that is used at Replicate has Cold Boot time. The first image takes longer to generate. After the first image is generated, the next images will be generated faster.",
   },
   {
     id: 2,
