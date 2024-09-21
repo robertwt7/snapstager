@@ -39,7 +39,7 @@ export const Features: FunctionComponent = () => {
       {/* Feature section */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
-          <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:whitespace-nowrap">
+          <p className="mt-2 text-3xl font-bold tracking-tight text-blue-700 sm:text-4xl md:whitespace-nowrap">
             Why Choose Us?
           </p>
         </div>
@@ -47,7 +47,7 @@ export const Features: FunctionComponent = () => {
           <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
             {features.map((feature) => (
               <div key={feature.name} className="relative pl-16">
-                <dt className="text-base font-semibold leading-7 text-gray-900">
+                <dt className="text-base font-semibold leading-7 text-blue-700">
                   <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
                     <feature.icon
                       className="h-6 w-6 text-white"
@@ -56,7 +56,7 @@ export const Features: FunctionComponent = () => {
                   </div>
                   {feature.name}
                 </dt>
-                <dd className="mt-2 text-left text-base leading-7 text-gray-600">
+                <dd className="mt-2 text-left text-base leading-7 text-blue-700">
                   {feature.description}
                 </dd>
               </div>
