@@ -53,7 +53,7 @@ const HomePage: NextPage = () => {
         <div className="mb-16 mt-4 flex flex-col space-y-10" data-nosnippet>
           <div className="flex flex-col sm:flex-row sm:space-x-8">
             <div>
-              <h3 className="mb-1 text-lg text-white font-medium text-blue-700">ORIGINAL</h3>
+              <h3 className="mb-1 text-lg font-medium text-blue-700">ORIGINAL</h3>
               <Image
                 alt="Original photo of a room with spaceshift.com"
                 src="/original-pic.jpg"
