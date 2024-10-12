@@ -9,6 +9,8 @@
   </p>
 </p>
 
+# DEPRECATED - This project is now unmaintained and deprecated. Archive only
+
 [![SnapStager](./public/screenshot.png)](https://snapstager.com)
 
 
